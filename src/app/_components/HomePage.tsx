@@ -1,29 +1,28 @@
 "use client";
-import { signOut } from "next-auth/react";
-import { AuthProvider } from "../providers/authProvider";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { LoaderIcon } from "react-hot-toast";
 interface props {
   user: User;
 }
 const HomePage: React.FC<props> = ({ user }) => {
+  const router = useRouter();
+  const {status} = useSession ()
 
-console.table (user)
+
+  useEffect(() => {
+    if (status !== 'loading'){
+      if (status === 'authenticated') {
+        router.push("/boards");
+      } else router.push("/login");
+    }
+  }, [status]);
+
   return (
-    <AuthProvider user={user!}>
-      <div className="flex flex-col gap-4">
-        <p>hello {user?.name}</p>
-        <button
-          className="bg-black px-6 py-2"
-          onClick={() => {
-            signOut({
-                redirect: true,
-                callbackUrl: `${window.location.origin}/login`
-            });
-          }}
-        >
-          signout
-        </button>
-      </div>
-    </AuthProvider>
+    <div className="flex flex-col gap-4">
+      <LoaderIcon />
+    </div>
   );
 };
 

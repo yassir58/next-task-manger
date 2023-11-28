@@ -1,9 +1,6 @@
 import "~/styles/globals.css";
-
 import { Inter } from "next/font/google";
-import { cookies } from "next/headers";
 import Provider from "./_trpc/Provider";
-import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
@@ -24,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
+      <body className={`font-sans bg-[#1A1B1F] ${inter.variable}`}>
         <Provider>
           <Toaster  position="bottom-center" />
           {children}

@@ -4,57 +4,90 @@ import { trpc } from "../_trpc/client";
 import { authContext } from "../context/contexts";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
-interface props {}
 import { NavBarLinks } from "./NavBarLinks";
+import { useSession } from "next-auth/react";
+import Avatar from "react-avatar";
+import Input from "./ui/Input";
+import PrimaryButton, {DangerButton} from "./ui/Buttons";
+import { signOut } from "next-auth/react";
+import { Skeleton } from "@chakra-ui/react";
+import {z} from 'zod'
 
+interface props {}
 export const SideNav: React.FC<props> = ({}) => {
-    const [name, setName] = useState("");
-  const { loggedInUser } = useContext(authContext);
+  const [name, setName] = useState("");
   const utils = trpc.useUtils();
+  const { data: session } = useSession();
+  const schema = z.string ().min (5)
+
   const boardsMutation = trpc.boardRouter.createBoard.useMutation({
-    onError: (err: any) => console.log("mutation err: ", err),
+    onError: (err: any) => toast.error ('failed to create board'),
     onSuccess: (data: any) => {
       utils.boardRouter.invalidate();
       toast.success("success: board created succesfully");
     },
   });
-  console.log ('this is logged in user : ', loggedInUser)
+  const newBoard = () =>
+  {
+    try {
+      schema.parse (name)
+      boardsMutation.mutateAsync({
+        userid: session?.user?.id!,
+        boardName: name,
+      });
+    setName ('')
+    } catch (erro:any){
+      toast.error ('Invalid input')
+    }
+  }
+
+    const handleLogout = () => {
+        signOut({
+            redirect: true,
+            callbackUrl: `http://localhost:3000/login`
+        });
+      }
+
+      const handleEnter = (e:any)=>{
+        if (e.key === 'Enter')
+            newBoard ()
+    }
+      
   return (
-    <div className="flex h-full flex-col px-3 py-4 md:px-2">
+    <div className="flex h-full flex-col px-3 py-4 md:px-2 gap-4">
       <Link
-        className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
+        className="mb-2 flex h-20 items-center justify-start rounded-md bg-[#2A2D32] p-4 md:h-20"
         href="/"
       >
-        <div className="w-32 text-white md:w-40">
-          <p>task manager</p>
+        <div className="flex items-center justify-start gap-4 ">
+          {session?.user ? 
+          (
+            <>
+            <Avatar
+            name={session?.user.name}
+            size="60"
+            color={"#6DB9EF"}
+            round={true}
+          />
+          <p className="text-bold text-gray-50">{session?.user.name}</p>
+            </>
+          ) : <Skeleton height='10px' />}
         </div>
       </Link>
-      <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        <div className='flex flex-col gap-3'>
-        <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="text-gray-700"
-      />
-      <button
-        className="bg-blue-600"
-        onClick={() =>
-          boardsMutation.mutateAsync({
-            userid: loggedInUser?.id!,
-            boardName: name,
-          })
-        }
-      >
-        new Board
-      </button>
-        </div>
+      <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2 h-full">
+        <div className="flex flex-col gap-5 h-full">
+          <Input
+            input={name}
+            setInput={setName}
+            placeHolder="Your board name"
+            handleEnter={handleEnter}
+          />
+          <PrimaryButton handleClick={newBoard} value='Create Board' />
         <NavBarLinks />
-        <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
-        
-          <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-            <div className="hidden md:block">Sign Out</div>
-          </button>
+        </div>
+
       </div>
+       <DangerButton handleClick={handleLogout} value='Logout' />
     </div>
   );
 };

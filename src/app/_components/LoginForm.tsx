@@ -1,6 +1,9 @@
-import { useState } from "react"
+'use client'
+import { useContext, useState } from "react"
 import {signIn} from 'next-auth/react'
 import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
+import { authContext } from "../context/contexts"
 interface props {}
 const LoginForm:React.FC<props> = ({})=>{
 
@@ -8,9 +11,9 @@ const LoginForm:React.FC<props> = ({})=>{
 
     const [email, setEmail] = useState ('')
     const [password, setPassword] = useState ('')
+    const {setIsAuth} = useContext (authContext)
     const router = useRouter ()
     const handleSignIn = async ()=>{
-        console.log ('sign in')
     
         const signInData = await signIn ('credentials', {
             email:email,
@@ -18,8 +21,10 @@ const LoginForm:React.FC<props> = ({})=>{
             redirect:false
         })
         if (signInData!.error)
-            console.log ('error:', signInData!.error)
+          toast.error (`Error: ${signInData!.error}`)
         else {
+                setIsAuth! (true)
+                toast.success (`Welcome back`)
                 router.refresh ()
                 router.push ('/')
         }
@@ -35,7 +40,7 @@ const LoginForm:React.FC<props> = ({})=>{
           </label>
           <input
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-[8px] px-4 py-2 text-gray-900"
+            className="rounded-[12px] px-4 py-2 text-gray-900"
             id="email"
             value={email}
             type="email"
@@ -48,14 +53,14 @@ const LoginForm:React.FC<props> = ({})=>{
           </label>
           <input
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-[8px] px-4 py-2 text-gray-900"
+            className="rounded-[12px] px-4 py-2 text-gray-900"
             id="password"
             value={password}
             type="password"
             placeholder="type your password"
           />
         </div>
-        <button type='submit' className='bg-blue-600 rounded-[8px] px-6 py-2'>sign in</button>
+        <button type='submit' className='bg-blue-600 rounded-[12px] px-6 py-2'>sign in</button>
         </form>
     )
 }

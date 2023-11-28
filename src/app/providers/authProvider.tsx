@@ -8,7 +8,8 @@ interface AuthProviderProps {
 export const AuthProvider:React.FC<AuthProviderProps> = ({children, user})=>{
 
     const [loggedInUser, setLoggedInUser] = useState (user)
-    return <authContext.Provider value={{loggedInUser, setLoggedInUser}}>
+    const [isAuth, setIsAuth] = useState (false)
+    return <authContext.Provider value={{loggedInUser, setLoggedInUser, isAuth, setIsAuth}}>
         {children}
     </authContext.Provider>
 }

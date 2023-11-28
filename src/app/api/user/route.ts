@@ -1,12 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "~/server/db";
-import z from 'zod'
+import { requestSchema } from "../../../../constants";
 
-export const requestSchema = z.object({
-    name: z.string(),
-    email: z.string().email (),
-    password:z.string().min(6)
-})
 
 export async function POST (req:Request){
 
@@ -36,7 +31,6 @@ export async function POST (req:Request){
               });
         return NextResponse.json ({user:newUser, message:'User created succesfully'}, {status:201})
     }catch (err:any){
-        console.log (err)
         return NextResponse.json ({user:null, message:err}, {status:500})
     }
 }

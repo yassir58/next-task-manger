@@ -1,29 +1,45 @@
-'use client'
+"use client";
 import Link from "next/link";
 import { trpc } from "../_trpc/client";
-import { useContext } from "react";
-import { authContext } from "../context/contexts";
+import { useSession } from "next-auth/react";
+import { BsFillGridFill } from "react-icons/bs";
+import { usePathname, useRouter } from "next/navigation";
+import { BoardsSkeleton } from "./ui/Skeletons";
+import { useEffect } from "react";
 interface props {}
 
-export const NavBarLinks:React.FC<props> = ({})=>{
-    const {loggedInUser} = useContext (authContext)
-    const { data, isLoading } = trpc.boardRouter.getBoards.useQuery(
-        { userid: loggedInUser?.id! },
-        {
-          onError: (error: any) => console.log("fetching error : ", error),
-        },
-      );
-    return (<>
-        {data?.map((link) => {
-          return (
-            <Link
-              key={link.name}
-              href={`/boards/${link.id}`}
-              className={'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3'}
-            >
-              <p className="hidden md:block">{link.name}</p>
-            </Link>
-          );
-        })}
-      </>)
-}
+export const NavBarLinks: React.FC<props> = ({}) => {
+  const { data: session } = useSession();
+  const pathname = usePathname ()
+  const router = useRouter ()
+  const { data, isLoading } = trpc.boardRouter.getBoards.useQuery(
+    { userid: session?.user?.id! },
+    
+  );
+
+    useEffect(()=>{
+      if (data && (data!.length >= 1 && pathname === '/boards'))
+        router.replace (`/boards/${data[0]?.id}`);
+    }, [data])
+  if (isLoading)
+    return <BoardsSkeleton />
+  return (
+    <div className="flex min-h-[50vh] max-h-[50vh] flex-col gap-2 overflow-auto">
+      {data?.length ? data?.map((link) => {
+        return (
+          <Link
+            key={link.name}
+            href={`/boards/${link.id}`}
+            className={
+              "flex h-[48px] w-[98%] grow items-center justify-center gap-2 rounded-[12px] bg-[#2A2D32] bg-opacity-50 p-2  text-sm font-medium text-[#A7A3A0] hover:bg-opacity-70  md:flex-none md:justify-start md:p-2 md:px-3"
+            }
+          >
+            <BsFillGridFill />
+
+            <p className="hidden md:block">{link.name}</p>
+          </Link>
+        );
+      }) : <p className="text-[#C4C1BB]"> you have no boards </p>}
+    </div>
+  );
+};
