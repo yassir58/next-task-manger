@@ -43,7 +43,7 @@ export const AddTask: React.FC<props> = ({boardId}) => {
         value={input}
         onChange={(e)=> setInput (e.target.value)}
         placeholder="task exmp:finish x project"
-        className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400 hover:opacity-70 focus:outline-none"
+        className="rounded-[12px] border-[1px] border-gray-400  text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400 hover:opacity-70 focus:outline-none"
       />
       <SelectInput setStatus={setStatus} />
       <button className='text-[#D6E4FC] bg-blue-700 rounded-full px-4 py-2' onClick={()=>{

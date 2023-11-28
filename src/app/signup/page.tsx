@@ -34,6 +34,9 @@ const signUp: React.FC<props> = ({}) => {
   };
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+
+      <div className='flex px-8 flex-col items-start justify-center gap-4 rounded-[12px] bg-[#1A1B1F] drop-shadow-md py-6'>
+      <p className="text-2xl text-left text-[#C4C1BB]">Sign up</p>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -47,7 +50,7 @@ const signUp: React.FC<props> = ({}) => {
             </label>
             <input
               onChange={(e) => setUsername(e.target.value)}
-              className="rounded-[12px] px-4 py-2 text-gray-900"
+              className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400  focus:outline-none"
               id="username"
               value={username}
               type="text"
@@ -60,7 +63,7 @@ const signUp: React.FC<props> = ({}) => {
             </label>
             <input
               onChange={(e) => setEmail(e.target.value)}
-              className="rounded-[12px] px-4 py-2 text-gray-900"
+              className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400  focus:outline-none"
               id="email"
               value={email}
               type="email"
@@ -73,7 +76,7 @@ const signUp: React.FC<props> = ({}) => {
             </label>
             <input
               onChange={(e) => setPassword(e.target.value)}
-              className="rounded-[12px] px-4 py-2 text-gray-900"
+              className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400  focus:outline-none"
               id="password"
               value={password}
               type="password"
@@ -87,8 +90,9 @@ const signUp: React.FC<props> = ({}) => {
         >
           signup
         </button>
-        <Link href={'/login'}><p className='text-white py-3'>already have an account ? log in</p></Link>
       </form>
+        <Link href={'/login'}><p className='text-white py-3'>already have an account ? log in</p></Link>
+          </div>
     </main>
   );
 };

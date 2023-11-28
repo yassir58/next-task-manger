@@ -40,7 +40,7 @@ const LoginForm:React.FC<props> = ({})=>{
           </label>
           <input
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-[12px] px-4 py-2 text-gray-900"
+            className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400  focus:outline-none"
             id="email"
             value={email}
             type="email"
@@ -53,7 +53,7 @@ const LoginForm:React.FC<props> = ({})=>{
           </label>
           <input
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-[12px] px-4 py-2 text-gray-900"
+            className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400  focus:outline-none"
             id="password"
             value={password}
             type="password"
