@@ -33,6 +33,7 @@ export const SmallButton:React.FC<props> = ({handleClick, value}) => {
         <div className='flex gap-6  items-center'>
          <p>{value}</p>
          <FaPlus fontSize='18px'/> 
+
         </div>
       </button>
     )

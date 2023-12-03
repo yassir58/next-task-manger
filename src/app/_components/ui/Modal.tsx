@@ -8,6 +8,7 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure,
+    Button
   } from '@chakra-ui/react'
 interface modalContext {
   isOpen?: boolean;
@@ -17,19 +18,20 @@ interface modalContext {
 export const modalContext = createContext<modalContext>({});
 
 interface modalWrapperProps {
-    styles:string 
+    variant:string 
     children:React.ReactNode,
     value:any
     title:string
+    size?:string
 }
 
-export const ModalWrapper:React.FC<modalWrapperProps> = ({children, styles, value, title})=> {
+export const ModalWrapper:React.FC<modalWrapperProps> = ({children,size='sm', variant, value, title})=> {
     const { isOpen, onOpen, onClose } = useDisclosure()
     return (
       <>
-        <button className={styles} onClick={onOpen}>{value}</button>
+        <Button variant={variant} onClick={onOpen}>{value}</Button>
   
-        <Modal  isOpen={isOpen} onClose={onClose} size={'xs'} >
+        <Modal  isOpen={isOpen} onClose={onClose} size={size} >
           <ModalOverlay />
           <ModalContent bgColor={'#2A2D32'}>
             <ModalHeader color={'#D6E4FC'}>{title}</ModalHeader>

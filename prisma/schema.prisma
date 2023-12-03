@@ -62,40 +62,57 @@ model VerificationToken {
 }
 
 model User {
-  id       String    @id @default(uuid())
-  name     String    @unique @db.VarChar(255)
-  email    String    @unique
-  password String
-  createAt DateTime  @default(now())
-  updateAt DateTime  @default(now())
-  Boards   Board[]
-  accounts Account[]
-  sessions Session[]
-  Post     Post[]
+  id           String      @id @default(uuid())
+  name         String      @unique @db.VarChar(255)
+  email        String      @unique
+  password     String
+  profileImage String?
+  createAt     DateTime    @default(now())
+  updateAt     DateTime    @default(now())
+  accounts     Account[]
+  sessions     Session[]
+  Workspaces   Workspace[] @relation("Owner")
+  Post         Post[]
 
   @@map(name: "users")
 }
 
+model Workspace {
+  id         String   @id @default(uuid())
+  name       String   @db.Text
+  image      String
+  visibility String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+  ownerId    String
+  owner      User     @relation("Owner", fields: [ownerId], references: [id])
+  Boards     Board[]  @relation("boards")
+
+  // Members   User[] @relation("Members")
+  @@map(name: "workspaces")
+}
+
 model Board {
-  id       String   @id @default(uuid())
-  name     String   @db.VarChar(255)
-  createAt DateTime @default(now())
-  updateAt DateTime @default(now())
-  userId   String
-  user     User     @relation(fields: [userId], references: [id])
-  Task     Task[]
+  id          String     @id @default(uuid())
+  name        String     @db.VarChar(255)
+  createAt    DateTime   @default(now())
+  updateAt    DateTime   @default(now())
+  Task        Task[]
+  workspaceId String?
+  workspace   Workspace? @relation("boards", fields: [workspaceId], references: [id])
 
   @@map(name: "boards")
 }
 
 model Task {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  content   String   @db.Text
-  status    String   @db.Text
-  boardId   String
-  board     Board    @relation(fields: [boardId], references: [id])
+  id         String   @id @default(cuid())
+  coverImage String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+  content    String   @db.Text
+  status     String   @db.Text
+  boardId    String
+  board      Board    @relation(fields: [boardId], references: [id])
 
   @@map(name: "tasks")
 }

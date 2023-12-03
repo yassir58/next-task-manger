@@ -8,7 +8,7 @@ interface props {
     boardId:string
 }
 
-export const List:React.FC<props> = ({taskType,taskStatus, color,  boardId}) =>{
+export const List:React.FC<props> = ({taskType, taskStatus, color,  boardId}) =>{
 
     const {data:tasks} = trpc.taskRouter.filterTasksByStatus.useQuery ({
         boardId:boardId!,

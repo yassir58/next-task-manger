@@ -5,6 +5,7 @@ import {hash} from 'bcrypt'
 import { boardRouter } from "./routers/board";
 import { userRouter } from "./routers/user";
 import { taskRouter } from "./routers/task";
+import workspaceRouter from "./routers/workspace";
 /**
  * This is the primary router for your server.
  *
@@ -12,8 +13,10 @@ import { taskRouter } from "./routers/task";
  */
 export const appRouter = router({
   userRouter:userRouter,
+  workspaceRouter: workspaceRouter,
   boardRouter:boardRouter,
-  taskRouter:taskRouter
+  taskRouter:taskRouter,
+
 });
 // export type definition of API
 export type AppRouter = typeof appRouter;

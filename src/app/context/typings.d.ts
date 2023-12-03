@@ -29,3 +29,10 @@ type Task= {
     content: string,
     status: TaskType
 }
+
+type Workspace = {
+    id: string
+    visibility: string
+    image: string
+    name: string
+}

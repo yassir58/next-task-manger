@@ -5,12 +5,12 @@ export const boardRouter = router({
   getBoards: publicProcedure
     .input(
       z.object({
-        userid: z.string(),
+        workspaceId: z.string(),
       }),
     )
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.board.findMany({
-        where: { userId: input.userid },
+        where: { workspaceId : input.workspaceId},
       });
     }),
   getBoardById: publicProcedure
@@ -27,7 +27,7 @@ export const boardRouter = router({
   createBoard: publicProcedure
     .input(
       z.object({
-        userid: z.string(),
+        workspaceId: z.string(),
         boardName: z.string(),
       }),
     )
@@ -38,7 +38,7 @@ export const boardRouter = router({
       const createdBoard = await ctx.prisma.board.create({
         data:{
           ...newBoard,
-          user:{connect:{id: input.userid}}
+          workspace:{connect:{id: input.workspaceId}}
         },
       });
       return createdBoard;
