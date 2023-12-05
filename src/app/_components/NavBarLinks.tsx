@@ -11,9 +11,10 @@ interface props {}
 export const NavBarLinks: React.FC<props> = ({}) => {
   const { data: session } = useSession();
   const pathname = usePathname ()
+  const workspaceId = pathname.split ('/')[2]
   const router = useRouter ()
   const { data, isLoading } = trpc.boardRouter.getBoards.useQuery(
-    { userid: session?.user?.id! },
+    { workspaceId: workspaceId! },
     
   );
 
@@ -24,12 +25,12 @@ export const NavBarLinks: React.FC<props> = ({}) => {
   if (isLoading)
     return <BoardsSkeleton />
   return (
-    <div className="flex min-h-[50vh] max-h-[50vh] flex-col gap-2 overflow-auto">
+    <div className="flex  max-h-[50vh] flex-col gap-2 overflow-auto">
       {data?.length ? data?.map((link) => {
         return (
           <Link
             key={link.name}
-            href={`/boards/${link.id}`}
+            href={`${pathname}/boards/${link.id}`}
             className={
               "flex h-[48px] w-[98%] grow items-center justify-center gap-2 rounded-[12px] bg-[#2A2D32] bg-opacity-50 p-2  text-sm font-medium text-[#A7A3A0] hover:bg-opacity-70  md:flex-none md:justify-start md:p-2 md:px-3"
             }

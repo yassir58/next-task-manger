@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans bg-[#1A1B1F] ${inter.variable}`}>
+      <body className={`font-sans  ${inter.variable}`}>
         <Provider>
           <Toaster  position="bottom-center" />
           {children}

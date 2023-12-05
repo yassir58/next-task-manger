@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { trpc } from "~/app/_trpc/client";
 import { FaPlus } from "react-icons/fa6";
 import { List } from "~/app/_components/List";
-import { taskStatus } from "../../../../constants";
+import { taskStatus } from "../../../../../../constants";
 import { ModalWrapper } from "~/app/_components/ui/Modal";
 import { AddTask } from "~/app/_components/AddTask";
 
@@ -12,7 +12,7 @@ interface props {}
 
 const page: React.FC<props> = ({}) => {
   const pathname = usePathname();
-  const boardId = pathname.split("/")[2];
+  const boardId = pathname.split("/")[4];
   const { data } = trpc.boardRouter.getBoardById.useQuery({
     id: boardId!,
   });

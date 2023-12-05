@@ -2,9 +2,9 @@ import { ComponentStyleConfig, defineStyleConfig, extendTheme } from "@chakra-ui
 
 
 const Primary = {
-    10:"#09090B",
-    50:"#09090B",
-    100:"#09090B"
+    10:"#1A1A1F",
+    50:"#1A1A1F",
+    100:"#1A1A1F"
 }
 
 const LightGray = {

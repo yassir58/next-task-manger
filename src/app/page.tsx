@@ -9,14 +9,9 @@ export default async function Home() {
   
   return (
     <main className="flex min-h-screen flex-col items-center bg-gradient-to-b from-[#1A1B1F] to-[#2A2D32] text-white">
-      <Header user={session?.user} />
+      <Header />
       <WorkspaceHeader />
       <Workspaces />
-     {/* <HomePage user={{
-      name:session?.user.name,
-      email:session?.user.email!,
-      id:session?.user.id
-     } }/> */}
     </main>
      
   );

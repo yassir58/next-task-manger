@@ -7,19 +7,21 @@ import {
   Text,
   Avatar
 } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 
 import { VscTriangleDown } from "react-icons/vsc";
 
 interface props {
-  user: any;
 }
 
-const UserNavBar: React.FC<props> = ({ user }) => {
+const UserNavBar: React.FC<props> = ({  }) => {
+  const {data:session} = useSession ()
+  const user = session?.user
   return (
     <HStack spacing={4}>
-      <Avatar size="md" src={""} name={user.name} />
+      <Avatar size="md" src={""} name={user?.name} />
       <Text fontSize="19px" fontWeight={"bold"} color='veryLightGray.100'>
-        {user.name}
+        {user?.name}
       </Text>
       <Menu>
         <MenuButton>

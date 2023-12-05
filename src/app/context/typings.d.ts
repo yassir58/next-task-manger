@@ -27,7 +27,8 @@ type TaskType = "backlog" | "in-review" | "in-progress" | "completed"
 type Task= {
     id:string,
     content: string,
-    status: TaskType
+    status: TaskType,
+    coverImage:string
 }
 
 type Workspace = {

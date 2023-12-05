@@ -9,8 +9,10 @@ import { useSession } from "next-auth/react";
 import Input from "./ui/Input";
 import PrimaryButton, { DangerButton } from "./ui/Buttons";
 import { signOut } from "next-auth/react";
-import { Skeleton, Avatar, HStack, Button, Text } from "@chakra-ui/react";
+import { Skeleton, Avatar, HStack, Button, Text, Stack , Icon} from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa6";
+import { usePathname } from "next/navigation";
+import { FaPen } from "react-icons/fa6";
 
 import { z } from "zod";
 
@@ -20,7 +22,13 @@ export const SideNav: React.FC<props> = ({}) => {
   const utils = trpc.useUtils();
   const { data: session } = useSession();
   const schema = z.string().min(5);
+  const pathname = usePathname ();
+  const workspaceId = pathname.split ('/')[2]
+  const {isLoading, data:workspace} = trpc.workspaceRouter.getWorkspaceById.useQuery ({
+    id : workspaceId!
+  })
 
+  console.table (workspace)
   const boardsMutation = trpc.boardRouter.createBoard.useMutation({
     onError: (err: any) => toast.error("failed to create board"),
     onSuccess: (data: any) => {
@@ -30,11 +38,11 @@ export const SideNav: React.FC<props> = ({}) => {
   });
   const newBoard = () => {
     try {
-      // schema.parse(name);
-      // boardsMutation.mutateAsync({
-      //   userid: session?.user?.id!,
-      //   boardName: name,
-      // });
+      schema.parse(name);
+      boardsMutation.mutateAsync({
+        workspaceId: workspaceId!,
+        boardName: name,
+      });
       setName("");
     } catch (erro: any) {
       toast.error("Invalid input");
@@ -53,24 +61,23 @@ export const SideNav: React.FC<props> = ({}) => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4 px-3 py-4 md:px-2">
-      <Link
-        className="mb-2 flex h-20 items-center justify-start rounded-md bg-[#2A2D32] p-4 md:h-20"
-        href="/"
-      >
-        <div className="flex items-center justify-start gap-4 ">
-          {session?.user ? (
-            <>
-              <Avatar name={session?.user.name} />
-              <p className="text-bold text-gray-50">{session?.user.name}</p>
-            </>
-          ) : (
-            <Skeleton height="10px" />
-          )}
+    <Stack spacing={3} minW='20%' minH='100%'   px='2px' py='4px'  justifyContent={'space-between'}>
+     
+        <div className="mb-2 flex h-20 items-center justify-start rounded-md bg-[#2A2D32] p-4 md:h-20">
+             <HStack spacing={4} w='100%'>
+             <Avatar name={workspace?.name} size='lg' src={workspace?.image} borderRadius='12px'/>
+              <HStack w='100%' justifyContent='space-between' alignItems='center'>
+               <Stack spacing={1}>
+                <Text color='veryLightGray.100' fontSize='18px'>{workspace?.name}</Text>
+                <Text color='gray.500' fontSize='sm'>{workspace?.visibility}</Text>
+              </Stack>
+              <Icon as={FaPen} color='veryLightGray.100' fontSize='14px'/>
+              </HStack>
+
+             </HStack>
         </div>
-      </Link>
-      <div className="flex h-full grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        <div className="flex h-full flex-col gap-5">
+      <div className="flex  grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
+        <div className="flex  flex-col gap-5">
           <Input
             input={name}
             setInput={setName}
@@ -87,6 +94,6 @@ export const SideNav: React.FC<props> = ({}) => {
         </div>
       </div>
       <DangerButton handleClick={handleLogout} value="Logout" />
-    </div>
+    </Stack>
   );
 };

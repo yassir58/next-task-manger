@@ -18,7 +18,7 @@ const PrimaryButton: React.FC<props> = ({ handleClick, value }) => {
 
 export const DangerButton:React.FC<props> = ({handleClick, value}) => {
     return (
-        <button className="alignSelf-end bg-transparent w-[98%] px-4 py-2 rounded-[12px] hover:opacity-80 text-red-400 hover:bg-red-400 hover:text-[#1A1B1F]  border-[1px] border-red-400 " onClick={handleClick}>
+        <button className=" bg-transparent w-[98%] px-4 py-2 rounded-[12px] hover:opacity-80 text-red-400 hover:bg-red-400 hover:text-[#1A1B1F]  border-[1px] border-red-400 " onClick={handleClick}>
           <div className='flex w-[100%] justify-between items-center'>
            <p>{value}</p>
            <BiExit fontSize='18px'/> 

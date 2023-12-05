@@ -1,31 +1,32 @@
 "use client";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useState } from "react";
 import { MdTaskAlt } from "react-icons/md";
 import UserNavBar from "./UserNavBar";
 import ui from "../../styles/ui-module.module.css";
-import { Text, HStack } from "@chakra-ui/react"
+import { Text, HStack, Icon } from "@chakra-ui/react"
 import { FaPlus } from "react-icons/fa6";
 import { ModalWrapper } from "./ui/Modal";
 import NewWorkspace from "./NewWorkspace";
+
 interface props {
-  user: any;
 }
 
 interface WorkspaceProps {}
 
-const Header: React.FC<props> = ({ user }) => {
+const Header: React.FC<props> = ({  }) => {
+
   return (
     <div
       className={`${ui.Header} ${ui.Grad} flex w-[100%] items-center justify-between px-6 py-2`}
     >
       <HStack alignItems="center" w='96%'>
-        <MdTaskAlt fontSize="20px" color='veryLightGray.100' />
+        <Icon as={MdTaskAlt} fontSize="20px" color='veryLightGray.100' />
         <Text fontSize="19px" fontWeight={"bold"} color='veryLightGray.100'>
           TaskManager
         </Text>
       </HStack>
-      <UserNavBar user={user} />
+      <UserNavBar />
     </div>
   );
 };

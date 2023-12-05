@@ -18,6 +18,7 @@ export const taskRouter = router({
         content: z.string(),
         status: z.string(),
         boardId: z.string(),
+        coverImage: z.string ()
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -25,6 +26,7 @@ export const taskRouter = router({
         data: {
           content: input.content,
           status: input.status,
+          coverImage: input.coverImage,
           board: {
             connect: { id: input.boardId },
           },
