@@ -56,7 +56,7 @@ const NewWorkspace: React.FC<props> = ({}) => {
         <Input placeholder="your workspace name" variant="regular" value={name} onChange={(e) => setName (e.target.value)} />
       </Stack>
       <HStack spacing={4} w='100%'>
-        <Button variant="lightGhost" onClick={() => toggleVisiblity ()}>
+        <Button w='100%' variant="lightGhost" onClick={() => toggleVisiblity ()}>
             <Text>{visibility}</Text>
             {visibility === 'Public' ? <MdOutlinePublic /> : <RiGitRepositoryPrivateFill />}
         </Button>

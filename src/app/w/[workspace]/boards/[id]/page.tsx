@@ -18,29 +18,11 @@ const page: React.FC<props> = ({}) => {
   });
 
   return (
-    <div className="mx-auto mt-4 grid h-[96vh] w-[98%] grid-rows-[10vh_1fr] items-center gap-6 rounded-[12px]  bg-[#2A2D32]">
-      <div className="flex w-[100%] items-center justify-between px-4">
-        
-        {<h2 className="text-3xl font-bold text-[#C4C1BB]">{data?.name}</h2>}
-        <ModalWrapper
-          title="Create task"
-          value={
-            <div className="flex gap-4">
-              <p className="text-sm">add task</p>
-              <FaPlus fontSize="16px" />
-            </div>
-          }
-          variant='regular'
-        >
-          <AddTask boardId={boardId!} />
-        </ModalWrapper>
-      </div>
-      <div className="mx-auto flex h-[98%] w-[98%] justify-between rounded-[12px] bg-[#2A2D32]">
+      <div className="mx-auto flex h-[90vh] w-[98%] justify-between rounded-[12px] bg-[#2A2D32]">
         {taskStatus.map((item: TaskStatus, index: number) => {
           return <List key={index} taskType={item.label} color={item.color} taskStatus={item.status} boardId={boardId!}/>;
         })}
       </div>
-    </div>
   );
 };
 

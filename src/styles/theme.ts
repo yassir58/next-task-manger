@@ -110,7 +110,6 @@ const ButtonStyle = defineStyleConfig ({
       }
     },
     lightGhost: {
-      w:'100%',
       display:'flex',
       justifyContent:'space-between',
       alignItems:'center',
@@ -119,7 +118,7 @@ const ButtonStyle = defineStyleConfig ({
       border:'1px',
       borderColor:'rgba(255, 255, 255, 0.1)',
       bg:'rgba(255, 255, 255, 0.1)',
-      px:'4px',
+      px:'8px',
       _hover: {
         borderColor:'veryLightGray.100'
       }

@@ -16,7 +16,7 @@ interface props {
 export const Card: React.FC<props> = ({ task }) => {
 
   return (
-    <div className="flex px-2 flex-col items-start justify-center gap-4 rounded-[12px] bg-[#1A1B1F] drop-shadow-md py-3">
+    <div className="flex px-2 flex-col items-start justify-center gap-4 rounded-[12px] bg-[#1A1B1F] drop-shadow-md pt-1 pb-2">
       {task?.coverImage.length ? <Cover image={task?.coverImage} /> : ''}
       <p className="text-l text-left text-[#C4C1BB]">{task.content}</p>
       {/* <div className="flex w-[98%] justify-end">

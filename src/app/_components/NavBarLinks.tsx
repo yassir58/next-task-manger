@@ -30,7 +30,7 @@ export const NavBarLinks: React.FC<props> = ({}) => {
         return (
           <Link
             key={link.name}
-            href={`${pathname}/boards/${link.id}`}
+            href={`/w/${workspaceId}/boards/${link.id}`}
             className={
               "flex h-[48px] w-[98%] grow items-center justify-center gap-2 rounded-[12px] bg-[#2A2D32] bg-opacity-50 p-2  text-sm font-medium text-[#A7A3A0] hover:bg-opacity-70  md:flex-none md:justify-start md:p-2 md:px-3"
             }

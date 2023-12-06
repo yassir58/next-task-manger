@@ -71,7 +71,6 @@ export const SideNav: React.FC<props> = ({}) => {
                 <Text color='veryLightGray.100' fontSize='18px'>{workspace?.name}</Text>
                 <Text color='gray.500' fontSize='sm'>{workspace?.visibility}</Text>
               </Stack>
-              <Icon as={FaPen} color='veryLightGray.100' fontSize='14px'/>
               </HStack>
 
              </HStack>
