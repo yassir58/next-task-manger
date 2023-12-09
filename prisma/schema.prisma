@@ -113,6 +113,18 @@ model Task {
   status     String   @db.Text
   boardId    String
   board      Board    @relation(fields: [boardId], references: [id])
+  subtasks SubTask[] @relation ("subtasks")
 
   @@map(name: "tasks")
+}
+
+
+model SubTask {
+  id String @id @default(cuid())
+  createdAt DateTime @default(now ())
+  updateAt DateTime @default(now())
+  content String @db.Text
+  Done Boolean
+  taskId String
+  task Task @relation("subtasks", fields: [taskId], references: [id])
 }

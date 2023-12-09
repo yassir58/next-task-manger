@@ -9,6 +9,8 @@ import { SetCover } from "./SetCover";
 import { HStack , Text} from "@chakra-ui/react";
 import { ModalWrapper } from "./ui/Modal";
 import { FaImage } from "react-icons/fa6";
+import { Cover } from "./ui/Cover";
+import ui from '../../styles/ui-module.module.css'
 
 interface props {
     boardId:string
@@ -45,6 +47,7 @@ export const AddTask: React.FC<props> = ({boardId}) => {
     }
   return (
     <div className="flex flex-col gap-6">
+      {cover.length ? <Cover image={cover} /> : ''}
       <input
         value={input}
         onChange={(e)=> setInput (e.target.value)}
@@ -53,7 +56,7 @@ export const AddTask: React.FC<props> = ({boardId}) => {
       />
       <HStack>
       <SelectInput setStatus={setStatus} />
-      <ModalWrapper title='Workspace cover' size='xs' variant='lightGhost' value={
+      <ModalWrapper title='Workspace cover' size='xs' buttonWidth='100%' variant='lightGhost' value={
             <>
             <Text>Cover</Text>
             <FaImage />
@@ -62,7 +65,7 @@ export const AddTask: React.FC<props> = ({boardId}) => {
             <SetCover coverSetter={setCover}/>
         </ModalWrapper>
       </HStack>
-      <button className='text-[#D6E4FC] bg-blue-700 rounded-full px-4 py-2' onClick={()=>{
+      <button className={`${ui.Grad} text-[#D6E4FC] rounded-full px-4 py-2 hover:opacity-80`} onClick={()=>{
         addTask ()
         onClose! ()
       }}>add</button>

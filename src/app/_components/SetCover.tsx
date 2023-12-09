@@ -76,7 +76,7 @@ export const SetCover: React.FC<props> = ({ coverSetter }) => {
         </HStack>
       )}
       <HStack spacing={4} w='100%'>
-        <Button variant='primary' onClick={onClose}>done</Button>
+        <button className="btn-primary" onClick={onClose}>done</button>
       </HStack>
     </Stack>
   );

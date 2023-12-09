@@ -1,64 +1,139 @@
-import {useState, useContext} from 'react';
-import { modalContext } from './ui/Modal';
-import { trpc } from '../_trpc/client';
-import toast from 'react-hot-toast';
-import { SelectInput } from './ui/Input';
+import { useState, useContext, useRef } from "react";
+import { ModalWrapper, modalContext } from "./ui/Modal";
+import { trpc } from "../_trpc/client";
+import toast from "react-hot-toast";
+import { SelectInput } from "./ui/Input";
+import { Cover } from "./ui/Cover";
+import {
+  Icon,
+  Stack,
+  Text,
+  EditablePreview,
+  EditableInput,
+  Editable,
+  InputGroup,
+  InputRightElement,
+  Button,
+  ButtonGroup,
+  IconButton,
+} from "@chakra-ui/react";
+import { actions } from "../../../constants";
+import DeleteTask from "./DeleteTask";
+import { FaCheck } from "react-icons/fa";
+import { RiCloseFill } from "react-icons/ri";
 interface props {
-    task:Task
+  task: Task;
 }
 
-export const EditTask:React.FC<props> =({task}) =>{
+export const EditTask: React.FC<props> = ({ task }) => {
+  const [input, setInput] = useState(task.content);
+  const { onClose } = useContext(modalContext);
+  const [onEdit, setOnEdit] = useState(false);
+  const [ready, setReady] = useState (false)
+  const utils = trpc.useUtils();
+  const actionsMap = new Map();
+  const titleInputRef = useRef<HTMLInputElement | null>(null);
+  const descriptionRef = useRef<HTMLInputElement | null>(null);
+  actionsMap.set("Delete Task", <DeleteTask task={task} />);
 
-    const [input, setInput] = useState (task.content)
-    const {onClose} = useContext (modalContext)
-    const [status, setStatus] = useState<TaskType> (task.status)
-    const utils = trpc.useUtils ()
-    const deleteTaskMutation = trpc.taskRouter.deleteTask.useMutation ({
-        onSuccess: (data:any) => {
-            toast.success ("Task deleted successfully");
-            utils.taskRouter.invalidate ();
-        },
-        onError: (err:any) => toast.error ('Error : failed to delete task')
-    })
-    const editTaskMutation = trpc.taskRouter.editeTask.useMutation ({
-        onSuccess : (data:any) =>{
-            toast.success ("Task edited successfully");
-            utils.taskRouter.invalidate ();
+  const editTaskMutation = trpc.taskRouter.editeTask.useMutation({
+    onSuccess: (data: any) => {
+      toast.success("Task edited successfully");
+      utils.taskRouter.invalidate();
+    },
+    onError: (err: any) => toast.error("Error: failed to edite task"),
+  });
 
-        },
-        onError: (err:any) => toast.error ("Error: failed to edite task")
-    })
+  const editTask = () => {
+    editTaskMutation.mutateAsync({
+      id: task.id!,
+      content: input,
+      status: task.status!,
+    });
+    // if (inputRef.current) inputRef.current.blur();
+  };
 
-    const editTask = ()=>{
-        editTaskMutation.mutateAsync ({
-            id: task.id!,
-            content:input,
-            status:status
-        })
+  const handleTitleSubmit = (e: any) => {
+    if (e.key === "Enter") {
+      editTask();
     }
-
-    const deleteTask = () =>{
-        deleteTaskMutation.mutateAsync ({
-            id: task.id
-        })
-    }
+  };
   return (
-    <div className="flex flex-col gap-6">
-      <input
-        value={input}
-        onChange={(e)=> setInput (e.target.value)}
-        className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400 hover:opacity-70 focus:outline-none"
-      />
-      <SelectInput setStatus={setStatus} />
-      <button className='text-[#D6E4FC] bg-blue-700 rounded-full px-4 py-2' onClick={()=>{
-        editTask ()
-        onClose! ()
-      }}>save</button>
-
-     <button className='border-0 bg-transparent text-red-600 text-md hover:text-red-800 py-4' onClick={()=>{
-        deleteTask ()
-        onClose!()
-     }}>delete task</button> 
+    <div className="minH-[60vh] maxH-[60vh] flex w-full flex-col gap-6">
+      {task.coverImage.length ? <Cover image={task.coverImage} /> : ""}
+      <div className="grid h-full w-full grid-cols-[1fr_200px] gap-4">
+        <Stack spacing={6}>
+          // Click the text to edit
+          <Editable defaultValue={task.content}>
+            <EditablePreview color="veryLightGray.100" fontSize="24px" />
+            <InputGroup>
+              <EditableInput
+                bg="rgba(255,255,255,0.1)"
+                px={2}
+                _focus={{
+                  outline: "none",
+                  userselect: "none",
+                  boxShadow: "none",
+                }}
+                onKeyDown={handleTitleSubmit}
+                onBlur={() => {
+                    setOnEdit (false)
+                    setReady(true)}}
+                onChange={(e) => setInput(e.target.value)}
+                ref={titleInputRef!}
+                onFocus={() => {
+                  setOnEdit(true);
+                }}
+                color="veryLightGray.100"
+                fontSize="24px"
+              />
+              {onEdit ? (
+                <InputRightElement>
+                  
+                    <IconButton colorScheme='green' aria-label="" icon={<FaCheck />} />
+                   
+                </InputRightElement>
+              ) : (
+                ""
+              )}
+            </InputGroup>
+          </Editable>
+         {ready ? <ButtonGroup>
+            <Button colorScheme='green' onClick={()=>{
+                setReady (false)
+                editTask()}}>save</Button>
+            <Button colorScheme='ghost' onClick={() => setReady (false)}>cancel</Button>
+          </ButtonGroup> :''}
+        </Stack>
+        <Stack spacing={2}>
+          {actions.map((action: any, index: number) => {
+            return (
+              <ModalWrapper
+                title={action.actionName}
+                variant="unstyled"
+                value={
+                  <div
+                    key={index}
+                    className="${ui.gradientBorder}  flex w-[98%] grow items-center justify-center gap-2 rounded-[8px] bg-gray-100 bg-opacity-10 p-2  text-sm font-medium text-[#A7A3A0] hover:bg-opacity-20  md:flex-none md:justify-start md:p-2 md:px-3 "
+                  >
+                    <Icon
+                      as={action.icon}
+                      color={action.status === "danger" ? "red.500" : "#A7A3A0"}
+                    />
+                    <Text
+                      color={action.status === "danger" ? "red.500" : "#A7A3A0"}
+                    >
+                      {action.actionName}
+                    </Text>
+                  </div>
+                }
+              >
+                {actionsMap.get(action.actionName)}
+              </ModalWrapper>
+            );
+          })}
+        </Stack>
+      </div>
     </div>
-  )
-}
+  );
+};

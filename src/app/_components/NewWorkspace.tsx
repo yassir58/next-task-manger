@@ -60,7 +60,7 @@ const NewWorkspace: React.FC<props> = ({}) => {
             <Text>{visibility}</Text>
             {visibility === 'Public' ? <MdOutlinePublic /> : <RiGitRepositoryPrivateFill />}
         </Button>
-        <ModalWrapper title='Workspace cover' size='xs' variant='lightGhost' value={
+        <ModalWrapper title='Workspace cover' buttonWidth='100%' size='xs' variant='lightGhost' value={
             <>
             <Text>Cover</Text>
             <FaImage />

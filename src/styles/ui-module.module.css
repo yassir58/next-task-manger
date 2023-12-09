@@ -9,3 +9,21 @@
     background: -webkit-linear-gradient(to right, #B06AB3, #4568DC);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #B06AB3, #4568DC); 
 }
+
+.gradientBorder {
+    position: relative;
+    padding: 10px;
+  }
+  
+  .gradientBorder::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    border: 2px solid transparent;
+    border-image: linear-gradient(to right, #B06AB3, #4568DC); /* Adjust colors as needed */
+    border-image-slice: 1;
+  }

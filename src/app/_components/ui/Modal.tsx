@@ -8,8 +8,11 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure,
-    Button
+    Button,
+    EditableInput,
+    Editable
   } from '@chakra-ui/react'
+import { Card } from "./Cards";
 interface modalContext {
   isOpen?: boolean;
   onOpen?: () => void;
@@ -23,13 +26,14 @@ interface modalWrapperProps {
     value:any
     title:string
     size?:string
+    buttonWidth?:string
 }
 
-export const ModalWrapper:React.FC<modalWrapperProps> = ({children,size='sm', variant, value, title})=> {
+export const ModalWrapper:React.FC<modalWrapperProps> = ({children,size='sm', variant, value, title, buttonWidth})=> {
     const { isOpen, onOpen, onClose } = useDisclosure()
     return (
       <>
-        <Button variant={variant} onClick={onOpen}>{value}</Button>
+        <Button w={buttonWidth} variant={variant} onClick={onOpen}>{value}</Button>
   
         <Modal  isOpen={isOpen} onClose={onClose} size={size} >
           <ModalOverlay />
@@ -48,3 +52,32 @@ export const ModalWrapper:React.FC<modalWrapperProps> = ({children,size='sm', va
   }
 
 
+interface ModalCardWrapperProps {
+  task:Task
+  children:React.ReactNode
+}
+
+export const ModalCardWrapper:React.FC<ModalCardWrapperProps> = ({task, children}) =>{
+  const {isOpen, onOpen, onClose} = useDisclosure ()
+  return (<>
+    <div onClick={onOpen} className="bg-gradient-to-r from-[#B06AB3] to-[#4568DC] rounded-[8px] hover:px-[1px] hover:py-[1px] hover:opacity-80">
+    <Card task={task}/>
+    </div>
+    <Modal  isOpen={isOpen} onClose={onClose} size={'3xl'} >
+          <ModalOverlay />
+          <ModalContent bgColor={'#2A2D32'}>
+            <ModalHeader color={'#D6E4FC'}>
+              <Editable>
+              <EditableInput value={task!.content} />
+              </Editable>
+            </ModalHeader>
+            <ModalCloseButton color={'#C4C1BB'}/>
+            <ModalBody>
+                <modalContext.Provider value={{isOpen, onOpen, onClose}}>
+                {children}
+                </modalContext.Provider>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+  </>)
+}
