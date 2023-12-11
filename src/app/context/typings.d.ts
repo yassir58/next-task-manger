@@ -28,7 +28,8 @@ type Task= {
     id:string,
     content: string,
     status: TaskType,
-    coverImage:string
+    coverImage:string,
+    Description:string
 }
 
 type Workspace = {

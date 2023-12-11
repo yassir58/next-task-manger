@@ -38,7 +38,8 @@ export const AddTask: React.FC<props> = ({boardId}) => {
                 boardId: boardId,
                 content:input,
                 status:status,
-                coverImage:cover!
+                coverImage:cover!,
+                description:''
             })
         }
         catch (err:any){

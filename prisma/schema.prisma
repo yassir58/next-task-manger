@@ -105,15 +105,16 @@ model Board {
 }
 
 model Task {
-  id         String    @id @default(cuid())
-  coverImage String
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @default(now())
-  content    String    @db.Text
-  status     String    @db.Text
-  boardId    String
-  board      Board     @relation(fields: [boardId], references: [id])
-  SubTask    SubTask[]
+  id          String    @id @default(cuid())
+  coverImage  String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  content     String    @db.Text
+  Description String    @db.Text
+  status      String    @db.Text
+  boardId     String
+  board       Board     @relation(fields: [boardId], references: [id])
+  SubTask     SubTask[]
 
   @@map(name: "tasks")
 }

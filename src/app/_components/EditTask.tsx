@@ -24,6 +24,7 @@ import { RiCloseFill } from "react-icons/ri";
 import AddSubtask from "./AddSubtask";
 import { SetCover } from "./SetCover";
 import Subtasks from "./Subtasks";
+import AddDescription from "./AddDescription";
 interface props {
   task: Task;
 }
@@ -55,6 +56,7 @@ export const EditTask: React.FC<props> = ({ task }) => {
       id: task.id!,
       content: input,
       status: task.status!,
+      description:task.Description
     });
     // if (inputRef.current) inputRef.current.blur();
   };
@@ -110,6 +112,7 @@ export const EditTask: React.FC<props> = ({ task }) => {
                 editTask()}}>save</Button>
             <Button colorScheme='ghost' onClick={() => setReady (false)}>cancel</Button>
           </ButtonGroup> :''}
+              <AddDescription task={task} />
           <Subtasks task={task} />
         </Stack>
         <Stack spacing={2}>
