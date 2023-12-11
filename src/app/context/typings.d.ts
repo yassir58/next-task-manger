@@ -37,3 +37,9 @@ type Workspace = {
     image: string
     name: string
 }
+
+type SubTask = {
+    id: string
+    content: string
+    done: boolean
+}

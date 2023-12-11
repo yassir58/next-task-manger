@@ -21,6 +21,9 @@ import { actions } from "../../../constants";
 import DeleteTask from "./DeleteTask";
 import { FaCheck } from "react-icons/fa";
 import { RiCloseFill } from "react-icons/ri";
+import AddSubtask from "./AddSubtask";
+import { SetCover } from "./SetCover";
+import Subtasks from "./Subtasks";
 interface props {
   task: Task;
 }
@@ -30,11 +33,14 @@ export const EditTask: React.FC<props> = ({ task }) => {
   const { onClose } = useContext(modalContext);
   const [onEdit, setOnEdit] = useState(false);
   const [ready, setReady] = useState (false)
+  const [cover, setCover] = useState (task.coverImage)
   const utils = trpc.useUtils();
   const actionsMap = new Map();
   const titleInputRef = useRef<HTMLInputElement | null>(null);
   const descriptionRef = useRef<HTMLInputElement | null>(null);
   actionsMap.set("Delete Task", <DeleteTask task={task} />);
+  actionsMap.set ("Add Subtask", <AddSubtask task={task}/>)
+  actionsMap.set ('Change Cover', <SetCover coverSetter={setCover} />)
 
   const editTaskMutation = trpc.taskRouter.editeTask.useMutation({
     onSuccess: (data: any) => {
@@ -60,7 +66,7 @@ export const EditTask: React.FC<props> = ({ task }) => {
   };
   return (
     <div className="minH-[60vh] maxH-[60vh] flex w-full flex-col gap-6">
-      {task.coverImage.length ? <Cover image={task.coverImage} /> : ""}
+      {task.coverImage.length ? <Cover image={cover} /> : ""}
       <div className="grid h-full w-full grid-cols-[1fr_200px] gap-4">
         <Stack spacing={6}>
           // Click the text to edit
@@ -104,6 +110,7 @@ export const EditTask: React.FC<props> = ({ task }) => {
                 editTask()}}>save</Button>
             <Button colorScheme='ghost' onClick={() => setReady (false)}>cancel</Button>
           </ButtonGroup> :''}
+          <Subtasks task={task} />
         </Stack>
         <Stack spacing={2}>
           {actions.map((action: any, index: number) => {

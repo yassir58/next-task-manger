@@ -18,6 +18,6 @@ export const taskStatus:TaskStatus[] = [
 export const actions = [
   {actionName:'Add attachement', status:'regular', icon:FaPaperclip},
   {actionName:'Add Subtask', status:'regular', icon:IoMdCheckboxOutline},
-  {actionName:'Change cover', status:'regular', icon:FaImage},
+  {actionName:'Change Cover', status:'regular', icon:FaImage},
   {actionName: 'Delete Task', status:'danger', icon:MdDelete},
 ]

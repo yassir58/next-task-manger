@@ -6,6 +6,7 @@ import { boardRouter } from "./routers/board";
 import { userRouter } from "./routers/user";
 import { taskRouter } from "./routers/task";
 import workspaceRouter from "./routers/workspace";
+import subtaskRouter from "./routers/subtask";
 /**
  * This is the primary router for your server.
  *
@@ -16,6 +17,7 @@ export const appRouter = router({
   workspaceRouter: workspaceRouter,
   boardRouter:boardRouter,
   taskRouter:taskRouter,
+  subtaskRouter:subtaskRouter
 
 });
 // export type definition of API
