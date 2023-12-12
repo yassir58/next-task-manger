@@ -52,3 +52,11 @@ type _Comment = {
     taskId: string
     createdAt:string
 }
+
+type Attachment = {
+    id: string
+    name: string
+    path: string
+    taskId: string
+    createdAt:string
+}

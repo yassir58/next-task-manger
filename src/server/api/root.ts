@@ -8,6 +8,7 @@ import { taskRouter } from "./routers/task";
 import workspaceRouter from "./routers/workspace";
 import subtaskRouter from "./routers/subtask";
 import { commentRouter } from "./routers/comment";
+import attachmentRouter from "./routers/attachment";
 /**
  * This is the primary router for your server.
  *
@@ -19,7 +20,8 @@ export const appRouter = router({
   boardRouter:boardRouter,
   taskRouter:taskRouter,
   subtaskRouter:subtaskRouter,
-  commentRouter: commentRouter
+  commentRouter: commentRouter,
+  attachmentRouter:attachmentRouter
 
 });
 // export type definition of API

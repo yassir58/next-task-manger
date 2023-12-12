@@ -16,13 +16,12 @@ interface props {
 export const Card: React.FC<props> = ({ task }) => {
 
   return (
-    <div className={`flex px-2 flex-col items-start justify-center gap-4 rounded-[8px] bg-[#1A1B1F] drop-shadow-md pt-1 pb-6 w-full h-full`}>
+    <div className={`flex px-2 flex-col hover:scale-95 items-start justify-center gap-4 rounded-[8px] bg-[#1A1B1F] drop-shadow-md pt-1 pb-6 w-full h-full`}>
       {task?.coverImage.length ? <Cover image={task?.coverImage} /> : ''}
       <p className="text-l text-left text-[#C4C1BB]">{task.content}</p>
 
       <HStack justifyContent={'space-between'} w='100%'>
       <Avatar name="test" size='xs'  borderRadius='8px'/>
-
       </HStack>
       {/* <div className="flex w-[98%] justify-end">
        <ModalWrapper

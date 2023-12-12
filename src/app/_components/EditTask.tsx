@@ -27,6 +27,8 @@ import Subtasks from "./Subtasks";
 import AddDescription from "./AddDescription";
 import AddComment from "./AddComment";
 import CommentsList from "./CommentsList";
+import AddAttachements from "./AddAttachements";
+import AttachmentsList from "./AttachmentsList";
 interface props {
   task: Task;
 }
@@ -53,6 +55,7 @@ export const EditTask: React.FC<props> = ({ task }) => {
   };
   actionsMap.set("Delete Task", <DeleteTask task={task} />);
   actionsMap.set("Add Subtask", <AddSubtask task={task} />);
+  actionsMap.set ('Add attachement', <AddAttachements task={task} />)
   actionsMap.set(
     "Change Cover",
     <SetCover coverSetter={setCover} submitHandler={changeCover} />,
@@ -85,7 +88,7 @@ export const EditTask: React.FC<props> = ({ task }) => {
   return (
     <div className="minH-[60vh] maxH-[60vh] flex w-full flex-col gap-6">
       {cover.length ? <Cover image={cover} /> : ""}
-      <div className="grid h-full w-full grid-cols-[1fr_200px] gap-4">
+      <div className="grid h-full w-full grid-flow-row md:grid-cols-[1fr_200px] gap-4">
         <Stack
           spacing={12}
           maxH={"55vh"}
@@ -157,6 +160,7 @@ export const EditTask: React.FC<props> = ({ task }) => {
           <AddDescription task={task} />
           <AddComment task={task} />
           <CommentsList task={task} />
+          <AttachmentsList task={task} />
           <Subtasks task={task} />
         </Stack>
         <Stack spacing={2}>

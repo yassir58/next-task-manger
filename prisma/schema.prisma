@@ -105,17 +105,18 @@ model Board {
 }
 
 model Task {
-  id          String    @id @default(cuid())
-  coverImage  String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now())
-  content     String    @db.Text
-  Description String    @db.Text
-  status      String    @db.Text
-  boardId     String
-  board       Board     @relation(fields: [boardId], references: [id])
-  SubTask     SubTask[]
-  Comments    Comment[]
+  id           String        @id @default(cuid())
+  coverImage   String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+  content      String        @db.Text
+  Description  String        @db.Text
+  status       String        @db.Text
+  boardId      String
+  board        Board         @relation(fields: [boardId], references: [id])
+  SubTask      SubTask[]
+  Comments     Comment[]
+  Attachements Attachement[]
 
   @@map(name: "tasks")
 }
@@ -138,6 +139,16 @@ model Comment {
   updateAt  DateTime @default(now())
   content   String   @db.Text
   userId    String
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id])
+}
+
+model Attachement {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  name      String   @db.Text
+  path      String
   taskId    String
   task      Task     @relation(fields: [taskId], references: [id])
 }

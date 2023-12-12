@@ -60,7 +60,7 @@ interface ModalCardWrapperProps {
 export const ModalCardWrapper:React.FC<ModalCardWrapperProps> = ({task, children}) =>{
   const {isOpen, onOpen, onClose} = useDisclosure ()
   return (<>
-    <div onClick={onOpen} className="bg-gradient-to-r from-[#B06AB3] to-[#4568DC] rounded-[8px] hover:px-[1px] hover:py-[1px] hover:opacity-80">
+    <div onClick={onOpen} className="bg-gradient-to-r from-[#B06AB3] to-[#4568DC] rounded-[8px] scale-95 hover:opacity-80">
     <Card task={task}/>
     </div>
     <Modal  isOpen={isOpen} onClose={onClose} size={'3xl'} >
