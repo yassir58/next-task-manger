@@ -68,7 +68,8 @@ export const taskRouter = router({
         content: z.string(),
         status: z.string(),
         id: z.string(),
-        description:z.string ()
+        description:z.string (),
+        cover: z.string ()
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -79,7 +80,8 @@ export const taskRouter = router({
         data:{
             content: input.content,
             status: input.status,
-            Description: input.description
+            Description: input.description,
+            coverImage:input.cover
         }
       });
     }),

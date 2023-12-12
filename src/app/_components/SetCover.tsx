@@ -6,7 +6,7 @@ import {
   InputRightElement,
   Stack,
   Avatar,
-  Button
+  Button,
 } from "@chakra-ui/react";
 import { useState, useContext } from "react";
 import { BiSearch } from "react-icons/bi";
@@ -14,15 +14,17 @@ import axios from "axios";
 import { LoaderIcon } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { modalContext } from "./ui/Modal";
+import ui from "../../styles/ui-module.module.css";
 
 interface props {
   coverSetter?: (value: string) => void;
+  submitHandler?: () => void;
 }
 
-export const SetCover: React.FC<props> = ({ coverSetter }) => {
+export const SetCover: React.FC<props> = ({ coverSetter, submitHandler }) => {
   const [covers, setCovers] = useState([]);
   const [input, setInput] = useState("");
-  const {onClose} = useContext (modalContext)
+  const { onClose } = useContext(modalContext);
 
   const { data, isLoading } = useQuery({
     queryKey: ["photos"],
@@ -75,8 +77,22 @@ export const SetCover: React.FC<props> = ({ coverSetter }) => {
           })}
         </HStack>
       )}
-      <HStack spacing={4} w='100%'>
-        <button className="btn-primary" onClick={onClose}>done</button>
+      <HStack spacing={4} w="100%">
+        {submitHandler ? (
+          <button
+            onClick={() =>{ 
+              submitHandler ();
+              onClose! ();
+            }}
+            className={`${ui.Grad} mx-auto rounded-full px-4 py-2 text-[#D6E4FC] hover:opacity-80`}
+          >
+            Change cover
+          </button>
+        ) : (
+          <button className="btn-primary" onClick={onClose}>
+            done
+          </button>
+        )}
       </HStack>
     </Stack>
   );

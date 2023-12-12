@@ -44,3 +44,11 @@ type SubTask = {
     content: string
     done: boolean
 }
+
+type _Comment = {
+    id: string
+    content: string
+    userId: string
+    taskId: string
+    createdAt:string
+}

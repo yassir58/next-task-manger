@@ -115,6 +115,7 @@ model Task {
   boardId     String
   board       Board     @relation(fields: [boardId], references: [id])
   SubTask     SubTask[]
+  Comments    Comment[]
 
   @@map(name: "tasks")
 }
@@ -129,4 +130,14 @@ model SubTask {
   task      Task     @relation(fields: [taskId], references: [id])
 
   @@map(name: "subtasks")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updateAt  DateTime @default(now())
+  content   String   @db.Text
+  userId    String
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id])
 }

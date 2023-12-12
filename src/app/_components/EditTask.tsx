@@ -25,6 +25,8 @@ import AddSubtask from "./AddSubtask";
 import { SetCover } from "./SetCover";
 import Subtasks from "./Subtasks";
 import AddDescription from "./AddDescription";
+import AddComment from "./AddComment";
+import CommentsList from "./CommentsList";
 interface props {
   task: Task;
 }
@@ -33,15 +35,28 @@ export const EditTask: React.FC<props> = ({ task }) => {
   const [input, setInput] = useState(task.content);
   const { onClose } = useContext(modalContext);
   const [onEdit, setOnEdit] = useState(false);
-  const [ready, setReady] = useState (false)
-  const [cover, setCover] = useState (task.coverImage)
+  const [ready, setReady] = useState(false);
+  const [cover, setCover] = useState(task.coverImage);
   const utils = trpc.useUtils();
   const actionsMap = new Map();
   const titleInputRef = useRef<HTMLInputElement | null>(null);
   const descriptionRef = useRef<HTMLInputElement | null>(null);
+
+  const changeCover = () => {
+    editTaskMutation.mutateAsync({
+      id: task.id!,
+      content: input,
+      status: task.status,
+      description: task.Description,
+      cover: cover,
+    });
+  };
   actionsMap.set("Delete Task", <DeleteTask task={task} />);
-  actionsMap.set ("Add Subtask", <AddSubtask task={task}/>)
-  actionsMap.set ('Change Cover', <SetCover coverSetter={setCover} />)
+  actionsMap.set("Add Subtask", <AddSubtask task={task} />);
+  actionsMap.set(
+    "Change Cover",
+    <SetCover coverSetter={setCover} submitHandler={changeCover} />,
+  );
 
   const editTaskMutation = trpc.taskRouter.editeTask.useMutation({
     onSuccess: (data: any) => {
@@ -56,7 +71,8 @@ export const EditTask: React.FC<props> = ({ task }) => {
       id: task.id!,
       content: input,
       status: task.status!,
-      description:task.Description
+      description: task.Description,
+      cover: task.coverImage,
     });
     // if (inputRef.current) inputRef.current.blur();
   };
@@ -68,12 +84,23 @@ export const EditTask: React.FC<props> = ({ task }) => {
   };
   return (
     <div className="minH-[60vh] maxH-[60vh] flex w-full flex-col gap-6">
-      {task.coverImage.length ? <Cover image={cover} /> : ""}
+      {cover.length ? <Cover image={cover} /> : ""}
       <div className="grid h-full w-full grid-cols-[1fr_200px] gap-4">
-        <Stack spacing={6}>
+        <Stack
+          spacing={12}
+          maxH={"55vh"}
+          minH="50vh"
+          overflowY={"auto"}
+          px={6}
+          py={4}
+        >
           // Click the text to edit
           <Editable defaultValue={task.content}>
-            <EditablePreview color="veryLightGray.100" fontSize="24px" />
+            <EditablePreview
+              color="veryLightGray.100"
+              fontSize="24px"
+              fontWeight={"bold"}
+            />
             <InputGroup>
               <EditableInput
                 bg="rgba(255,255,255,0.1)"
@@ -85,8 +112,9 @@ export const EditTask: React.FC<props> = ({ task }) => {
                 }}
                 onKeyDown={handleTitleSubmit}
                 onBlur={() => {
-                    setOnEdit (false)
-                    setReady(true)}}
+                  setOnEdit(false);
+                  setReady(true);
+                }}
                 onChange={(e) => setInput(e.target.value)}
                 ref={titleInputRef!}
                 onFocus={() => {
@@ -97,22 +125,38 @@ export const EditTask: React.FC<props> = ({ task }) => {
               />
               {onEdit ? (
                 <InputRightElement>
-                  
-                    <IconButton colorScheme='green' aria-label="" icon={<FaCheck />} />
-                   
+                  <IconButton
+                    colorScheme="green"
+                    aria-label=""
+                    icon={<FaCheck />}
+                  />
                 </InputRightElement>
               ) : (
                 ""
               )}
             </InputGroup>
           </Editable>
-         {ready ? <ButtonGroup>
-            <Button colorScheme='green' onClick={()=>{
-                setReady (false)
-                editTask()}}>save</Button>
-            <Button colorScheme='ghost' onClick={() => setReady (false)}>cancel</Button>
-          </ButtonGroup> :''}
-              <AddDescription task={task} />
+          {ready ? (
+            <ButtonGroup>
+              <Button
+                colorScheme="green"
+                onClick={() => {
+                  setReady(false);
+                  editTask();
+                }}
+              >
+                save
+              </Button>
+              <Button colorScheme="ghost" onClick={() => setReady(false)}>
+                cancel
+              </Button>
+            </ButtonGroup>
+          ) : (
+            ""
+          )}
+          <AddDescription task={task} />
+          <AddComment task={task} />
+          <CommentsList task={task} />
           <Subtasks task={task} />
         </Stack>
         <Stack spacing={2}>

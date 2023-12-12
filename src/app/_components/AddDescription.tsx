@@ -38,6 +38,7 @@ const AddDescription: React.FC<props> = ({ task }) => {
       content: task.content,
       status: task.status,
       description: value,
+      cover:task.coverImage
     });
   };
   return (
@@ -58,8 +59,8 @@ const AddDescription: React.FC<props> = ({ task }) => {
       </HStack>
       {add ? <Textarea 
         borderRadius="8px"
-        px="4px"
-        py="2px"
+        px={4}
+        py={2}
         bg="rgba(255,255,255,0.1)"
         onChange={(e) => setValue(e.target.value)}
         onFocus={() => setEdit(true)}
@@ -68,12 +69,12 @@ const AddDescription: React.FC<props> = ({ task }) => {
         placeholder="Add task description"
         _placeholder={{
           fontStyle: "italic",
-          color: "gray.400",
+          color: "veryLightGray.100",
           fontSize: "sm",
         }}
       /> : ''}
     {task.Description !== '' ?  <Editable defaultValue={task.Description}>
-        <EditablePreview color="gray.400" fontSize="18px" />
+        <EditablePreview color="veryLightGray.100" fontSize="18px" />
         <Textarea
           as={EditableTextarea}
           borderRadius="8px"
@@ -82,7 +83,7 @@ const AddDescription: React.FC<props> = ({ task }) => {
           bg="rgba(255,255,255,0.1)"
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => setEdit(true)}
-          color="gray.400"
+          color="veryLightGray.100"
           fontSize="18px"
           placeholder="Edit task description"
           _placeholder={{
