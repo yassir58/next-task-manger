@@ -5,41 +5,25 @@ import {
   MenuItem,
   MenuList,
   Text,
-  Avatar
+  Icon,
+  Avatar,
 } from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
+import useAuth from "~/hooks/useAuth";
+import { ModalProfileWrapper } from "./ui/Modal";
+import UserProfile from "./UserProfile";
 
-import { VscTriangleDown } from "react-icons/vsc";
+interface props {}
 
-interface props {
-}
-
-const UserNavBar: React.FC<props> = ({  }) => {
-  const {data:session} = useSession ()
-  const user = session?.user
+const UserNavBar: React.FC<props> = ({}) => {
+  const { user } = useAuth();
   return (
-    <HStack spacing={4}>
-      <Avatar size="md" src={""} name={user?.name} />
-      <Text fontSize="19px" fontWeight={"bold"} color='veryLightGray.100'>
-        {user?.name}
-      </Text>
-      <Menu>
-        <MenuButton>
-          <VscTriangleDown color='veryLightGray.100'/>
-        </MenuButton>
-        <MenuList bg={"#1A1B1F"} border='none'>
-          <MenuItem backgroundColor="#1A1B1F" color="veryLightGray.100" _hover={{bg:'#2A2D32'}} borderRadius={'8px'} w='96%' my={1} >
-            View Profile
-          </MenuItem>
-          <MenuItem backgroundColor="#1A1B1F" color="veryLightGray.100" _hover={{bg:'#2A2D32'}} borderRadius={'8px'} w='96%' my={2} >
-            {" "}
-            Invitaions{" "}
-          </MenuItem>
-          <MenuItem backgroundColor="#1A1B1F" color="veryLightGray.100" _hover={{bg:'#2A2D32'}} borderRadius={'8px'} w='96%' my={2} >
-            Logout
-          </MenuItem>
-        </MenuList>
-      </Menu>
+    <HStack spacing={6} justifyContent={'center'} alignItems='center'>
+      <HStack spacing={3} justifyContent={'center'} alignItems='center'>
+      <ModalProfileWrapper value='Settings'>
+        <UserProfile />
+      </ModalProfileWrapper>
+      </HStack>
+      <Avatar size="md" borderRadius='md' src={user?.profileImage!} name={user?.name} />
     </HStack>
   );
 };

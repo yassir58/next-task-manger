@@ -12,12 +12,13 @@ import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { MdOutlinePublic } from "react-icons/md";
 import { modalContext } from "./ui/Modal";
+import useAuth from "~/hooks/useAuth";
 
 interface props {}
 
 const NewWorkspace: React.FC<props> = ({}) => {
 
-    const {data:session} = useSession ()
+    const {user} = useAuth ()
     const [cover, setCover] = useState ('')
     const [visibility, setVisibility] = useState ('Private')
     const [name, setName] = useState ('')
@@ -39,7 +40,7 @@ const NewWorkspace: React.FC<props> = ({}) => {
     const handleSubmit  = () =>{
         NewWorkspaceMutation.mutateAsync ({
             name:name,
-            ownerId:session?.user.id!,
+            ownerId:user?.id!,
             visibility: visibility,
             cover: cover
         })

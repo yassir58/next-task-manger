@@ -30,6 +30,12 @@ const LighBlue = {
   100:'#C3DAFA'
 }
 
+const BlueSky = {
+  10:'#4568DC',
+  50:'#4568DC',
+  100:'#4568DC'
+}
+
 const veryLightGray ={
   10:'#DAD4CD',
   50:'#DAD4CD',
@@ -109,6 +115,18 @@ const ButtonStyle = defineStyleConfig ({
         opacity:0.8,
       }
     },
+    userField: {
+      alignItems:'center',
+      w:'100%',
+      bg:'LightGray.100',
+      minH:'60px',
+      px:'2',
+      py:'1',
+      borderRadius:'md',
+      _hover: {
+        opacity:0.8
+      }
+    },
     lightGhost: {
       display:'flex',
       justifyContent:'space-between',
@@ -144,6 +162,7 @@ const theme = extendTheme({
       Secondary,
       DarkBlue,
       LighBlue,
+      BlueSky,
       LightGray,
       veryLightGray
       

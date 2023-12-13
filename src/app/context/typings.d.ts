@@ -2,7 +2,7 @@
 type User = {
     name?: string
     email?: string
-    image?: string
+    profileImage?: string
     id?: string
     Board?: Board[]
 }

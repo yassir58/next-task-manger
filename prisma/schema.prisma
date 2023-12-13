@@ -62,17 +62,19 @@ model VerificationToken {
 }
 
 model User {
-  id           String      @id @default(uuid())
-  name         String      @unique @db.VarChar(255)
-  email        String      @unique
-  password     String
-  profileImage String?
-  createAt     DateTime    @default(now())
-  updateAt     DateTime    @default(now())
-  accounts     Account[]
-  sessions     Session[]
-  Workspaces   Workspace[] @relation("Owner")
-  Post         Post[]
+  id                 String       @id @default(uuid())
+  name               String       @unique @db.VarChar(255)
+  email              String       @unique
+  password           String
+  profileImage       String?
+  createAt           DateTime     @default(now())
+  updateAt           DateTime     @default(now())
+  accounts           Account[]
+  sessions           Session[]
+  Workspaces         Workspace[]  @relation("Owner")
+  SendInvitations    Invitation[] @relation("Owner")
+  ReceivedInvitation Invitation[] @relation("Receiver")
+  Post               Post[]
 
   @@map(name: "users")
 }
@@ -151,4 +153,15 @@ model Attachement {
   path      String
   taskId    String
   task      Task     @relation(fields: [taskId], references: [id])
+}
+
+model Invitation {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @default(now())
+  ownerId     String
+  receiverId  String
+  workspaceId String
+  owner       User     @relation("Owner", fields: [ownerId], references: [id])
+  receiver    User     @relation("Receiver", fields: [receiverId], references: [id])
 }

@@ -3,16 +3,16 @@
 import { Stack ,Text , Icon, HStack, InputGroup, Textarea, InputLeftElement, Avatar, InputRightAddon, InputRightElement} from "@chakra-ui/react"
 import { useState } from "react";
 import { FaComment } from "react-icons/fa";
-import { useSession } from "next-auth/react";
 import { trpc } from "../_trpc/client";
 import toast from "react-hot-toast";
+import useAuth from "~/hooks/useAuth";
 interface props {
     task:Task
 }
 const AddComment:React.FC<props> = ({task}) => {
 
     const [value, setValue] = useState ('')
-    const {data:session} = useSession ()
+    const {user} = useAuth ()
     const utils =  trpc.useUtils ()
     // const {data:comments} = trpc.commentRouter.getAll.useQuery ({
     //     taskId: task.id
@@ -30,7 +30,7 @@ const AddComment:React.FC<props> = ({task}) => {
             addCommentMutation.mutateAsync ({
                 taskId: task.id,
                 content: value,
-                userId: session?.user.id!
+                userId: user?.id!
             })
             setValue ('')
         }catch (error:any){
@@ -64,7 +64,7 @@ const AddComment:React.FC<props> = ({task}) => {
         }}
          onChange={(e) => setValue (e.target.value)}/>
         <InputLeftElement ml='10px' mt={2}>
-        <Avatar src='' name={session?.user.name} borderRadius='md'/>
+        <Avatar src='' name={user?.name} borderRadius='md'/>
         </InputLeftElement>
         <InputRightElement mr={4} mt={2}>
         <button className='btn-primary' onClick={createComment}>add</button>

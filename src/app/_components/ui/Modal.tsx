@@ -10,8 +10,13 @@ import {
     useDisclosure,
     Button,
     EditableInput,
-    Editable
+    Editable,
+    Icon
   } from '@chakra-ui/react'
+
+  import { MdSettings } from "react-icons/md";
+
+
 import { Card } from "./Cards";
 interface modalContext {
   isOpen?: boolean;
@@ -60,7 +65,7 @@ interface ModalCardWrapperProps {
 export const ModalCardWrapper:React.FC<ModalCardWrapperProps> = ({task, children}) =>{
   const {isOpen, onOpen, onClose} = useDisclosure ()
   return (<>
-    <div onClick={onOpen} className="bg-gradient-to-r from-[#B06AB3] to-[#4568DC] rounded-[8px] scale-95 hover:opacity-80">
+    <div onClick={onOpen} >
     <Card task={task}/>
     </div>
     <Modal  isOpen={isOpen} onClose={onClose} size={'3xl'} >
@@ -69,6 +74,36 @@ export const ModalCardWrapper:React.FC<ModalCardWrapperProps> = ({task, children
             <ModalHeader color={'#D6E4FC'}>
               <Editable>
               <EditableInput value={task!.content} />
+              </Editable>
+            </ModalHeader>
+            <ModalCloseButton color={'#C4C1BB'}/>
+            <ModalBody>
+                <modalContext.Provider value={{isOpen, onOpen, onClose}}>
+                {children}
+                </modalContext.Provider>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+  </>)
+}
+
+interface ModalProfileWrapperProps {
+  children: React.ReactNode
+  value:string
+}
+
+export const ModalProfileWrapper:React.FC<ModalProfileWrapperProps> = ({children, value}) =>{
+  const {isOpen, onOpen, onClose} = useDisclosure ()
+  return (<>
+    <Button fontSize={'15px'} color ='veryLightGray.100' variant='unstyled' onClick={onOpen}>
+      {value}
+    </Button>
+    <Modal  isOpen={isOpen} onClose={onClose} size={'3xl'} >
+          <ModalOverlay />
+          <ModalContent bgColor={'#2A2D32'}>
+            <ModalHeader color={'#D6E4FC'}>
+              <Editable>
+              <EditableInput value={'Profile Settings'} />
               </Editable>
             </ModalHeader>
             <ModalCloseButton color={'#C4C1BB'}/>

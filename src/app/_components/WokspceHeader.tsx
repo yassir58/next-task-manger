@@ -8,6 +8,7 @@ import Link from "next/link";
 import { MdWorkspaces } from "react-icons/md";
 import { trpc } from "../_trpc/client";
 import ui from '../../styles/ui-module.module.css'
+import { InviteToWorkspace } from "./InviteUser";
 
 interface props {}
 const WorkspaceHeader: React.FC<props> = ({}) => {
@@ -16,6 +17,9 @@ const WorkspaceHeader: React.FC<props> = ({}) => {
   const boardId = pathname.split("/")[4];
   const {data:board} = trpc.boardRouter.getBoardById.useQuery ({
     id: boardId!
+  })
+  const {data:workspace} = trpc.workspaceRouter.getWorkspaceById.useQuery ({
+    id : board?.workspaceId!
   })
 
   console.table (board)
@@ -38,6 +42,7 @@ const WorkspaceHeader: React.FC<props> = ({}) => {
       </HStack>
 
       <HStack spacing={4} >
+        <InviteToWorkspace workspace={workspace!} />
       <ModalWrapper
           title="Create task"
           value={
