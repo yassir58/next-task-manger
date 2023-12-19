@@ -11,7 +11,7 @@ import {
 import useAuth from "~/hooks/useAuth";
 import { ModalProfileWrapper } from "./ui/Modal";
 import UserProfile from "./UserProfile";
-
+import { InvitesList } from "./InvitesList";
 interface props {}
 
 const UserNavBar: React.FC<props> = ({}) => {
@@ -21,6 +21,9 @@ const UserNavBar: React.FC<props> = ({}) => {
       <HStack spacing={3} justifyContent={'center'} alignItems='center'>
       <ModalProfileWrapper value='Settings'>
         <UserProfile />
+      </ModalProfileWrapper>
+      <ModalProfileWrapper value='Invites'>
+        <InvitesList/>
       </ModalProfileWrapper>
       </HStack>
       <Avatar size="md" borderRadius='md' src={user?.profileImage!} name={user?.name} />

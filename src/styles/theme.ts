@@ -140,6 +140,30 @@ const ButtonStyle = defineStyleConfig ({
       _hover: {
         borderColor:'veryLightGray.100'
       }
+    },
+    accept: {
+      color:'green.600',
+      fontSize:"14px",
+      border:'none',
+      bg:'rgba(0, 244, 0, 0.2)',
+      px:'8px',
+      py:'2px',
+      _hover: {
+      bg:'rgba(0, 244, 0, 0.1)',
+      }
+
+    },
+    decline: {
+      color:'red.600',
+      fontSize:"14px",
+      border:'none',
+      bg:'rgba(244, 0, 0, 0.2)',
+      px:'8px',
+      py:'2px',
+      _hover: {
+      bg:'rgba(244, 0, 0, 0.1)',
+      }
+
     }
   }
 })

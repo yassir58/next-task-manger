@@ -6,11 +6,21 @@ const workspaceRouter = router ({
     getAll: publicProcedure.input (z.object ({
         userid: z.string ()
     })).query (async ({ctx, input})=>{
-        return await ctx.prisma.workspace.findMany ({
+        const userWorkspaces = await ctx.prisma.workspace.findMany ({
             where: {
                 ownerId: input.userid!
             }
         })
+        const userJoinedWorkspaces = await ctx.prisma.workspace.findMany({
+            where: {
+              members: {
+                some: {
+                    id: input.userid!, // Replace this with the actual user ID you are searching for
+                },
+              },
+            },
+          });
+        return [...userWorkspaces, ...userJoinedWorkspaces]
     }),
     newWorkspace: publicProcedure.input (z.object ({
         ownerId: z.string (),
@@ -20,10 +30,10 @@ const workspaceRouter = router ({
     })).mutation (async ({ctx, input})=>{
         return await ctx.prisma.workspace.create ({
             data: {
-                owner:{connect:{id: input.ownerId}},
                 name: input.name,
                 image: input.cover,
-                visibility: input.visibility
+                visibility: input.visibility,
+                ownerId:input.ownerId
             }
         })
     }),

@@ -98,7 +98,7 @@ export const ModalProfileWrapper:React.FC<ModalProfileWrapperProps> = ({children
     <Button fontSize={'15px'} color ='veryLightGray.100' variant='unstyled' onClick={onOpen}>
       {value}
     </Button>
-    <Modal  isOpen={isOpen} onClose={onClose} size={'3xl'} >
+    <Modal  isOpen={isOpen} onClose={onClose} size={'xl'} >
           <ModalOverlay />
           <ModalContent bgColor={'#2A2D32'}>
             <ModalHeader color={'#D6E4FC'}>

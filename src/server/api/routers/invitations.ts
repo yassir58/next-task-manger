@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { publicProcedure, router } from "../trpc";
+import { InviteFeild } from "~/app/_components/InviteUser";
 
 const invitationsRouter = router ({
     getReceived : publicProcedure.input (z.object({
@@ -31,6 +32,34 @@ const invitationsRouter = router ({
              receiver: {connect:{id: input.receiverId}},
              owner: {connect:{id:input.ownerId}}
             }
+        })
+    }),
+    acceptInvite: publicProcedure.input (z.object ({
+        userId: z.string (),
+        workspaceId:z.string (),
+        inviteId: z.string ()    
+
+    })).mutation (async ({ctx, input}) => {
+        const res =  await ctx.prisma.workspace.update ({
+            where:{ id : input.workspaceId},
+            data: {
+                members :{
+                    connect:{
+                        id: input.userId
+                    }
+                }
+            }
+        })
+        await ctx.prisma.invitation.delete ({
+            where: {id : input.inviteId}
+        })
+        return res
+    }),
+    declineInvite: publicProcedure.input (z.object ({
+        inviteId: z.string ()    
+    })).mutation (async ({ctx, input}) => {
+        return await ctx.prisma.invitation.delete ({
+            where: {id : input.inviteId}
         })
     })
 })

@@ -1,4 +1,4 @@
-import { Stack , Avatar, Text, Input} from "@chakra-ui/react"
+import { Stack , Avatar, Text, Input, HStack} from "@chakra-ui/react"
 import { useSession } from "next-auth/react"
 import { UploadButton } from "~/utils/uploadThing"
 import { trpc } from "../_trpc/client"
@@ -36,9 +36,11 @@ const UserProfile:React.FC<props> = ({}) => {
             console.log ('error : ', err)
         }
     }
-    return (<div className='grid gap-6 grid-cols-[150px_1fr]'>
+    return (
         <Stack spacing={6}>
-            <Avatar src={url!} size='2xl'  name={user?.name}/>
+
+        <HStack justifyContent='start' alignItems='center' spacing={4}>
+        <Avatar src={url!} size='2xl'  name={user?.name}/>
             <UploadButton
           endpoint="userRoute"
           onClientUploadComplete={(res) => {
@@ -52,8 +54,7 @@ const UserProfile:React.FC<props> = ({}) => {
           }}
 
         />
-        </Stack>
-
+        </HStack>    
         <Stack spacing={5} justifyContent={'center'} alignItems={'start'} w='100%'>
             <Stack spacing={3} w='100%'>
                 <Text fontSize='17px' color='veryLightGray.100'>Change username</Text>
@@ -65,7 +66,9 @@ const UserProfile:React.FC<props> = ({}) => {
             </Stack>
             <button className='btn-primary' onClick={updateProfile}>save</button>
         </Stack>
-    </div>)
+        </Stack>
+
+    )
 }
 
 export default UserProfile

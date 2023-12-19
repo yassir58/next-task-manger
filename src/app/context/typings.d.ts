@@ -60,3 +60,13 @@ type Attachment = {
     taskId: string
     createdAt:string
 }
+
+
+type Invite  = {
+    id          : string
+    createdAt   : string
+    updateAt    : string
+    ownerId     : string
+    receiverId  : string
+    workspaceId : string
+}

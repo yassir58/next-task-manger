@@ -62,36 +62,44 @@ model VerificationToken {
 }
 
 model User {
-  id                 String       @id @default(uuid())
-  name               String       @unique @db.VarChar(255)
-  email              String       @unique
+  id                 String           @id @default(uuid())
+  name               String           @unique @db.VarChar(255)
+  email              String           @unique
   password           String
   profileImage       String?
-  createAt           DateTime     @default(now())
-  updateAt           DateTime     @default(now())
+  createAt           DateTime         @default(now())
+  updateAt           DateTime         @default(now())
   accounts           Account[]
   sessions           Session[]
-  Workspaces         Workspace[]  @relation("Owner")
-  SendInvitations    Invitation[] @relation("Owner")
-  ReceivedInvitation Invitation[] @relation("Receiver")
+  SendInvitations    Invitation[]     @relation("Owner")
+  ReceivedInvitation Invitation[]     @relation("Receiver")
+  workspaces         Workspace[]      @relation("UserWorkspaces")
   Post               Post[]
-
-  @@map(name: "users")
+  UserWorkspaces     UserWorkspaces[]
 }
 
 model Workspace {
-  id         String   @id @default(uuid())
-  name       String   @db.Text
-  image      String
-  visibility String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
-  ownerId    String
-  owner      User     @relation("Owner", fields: [ownerId], references: [id])
-  Boards     Board[]  @relation("boards")
+  id             String           @id @default(uuid())
+  name           String
+  image          String
+  visibility     String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now())
+  ownerId        String
+  Boards         Board[]          @relation("boards")
+  members        User[]           @relation("UserWorkspaces")
+  UserWorkspaces UserWorkspaces[]
+}
 
-  // Members   User[] @relation("Members")
-  @@map(name: "workspaces")
+model UserWorkspaces {
+  userId      String
+  workspaceId String
+
+  user      User      @relation(fields: [userId], references: [id])
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+
+  @@id([userId, workspaceId])
+  @@index([workspaceId])
 }
 
 model Board {

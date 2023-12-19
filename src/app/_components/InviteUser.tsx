@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa6"
 import { FaSearch } from "react-icons/fa"
 import useAuth from "~/hooks/useAuth"
 import toast from "react-hot-toast"
+import { InvietsList } from "./InvitesList"
 
 interface props {
     workspace:Workspace
@@ -88,3 +89,8 @@ export const InviteToWorkspace:React.FC<props> = ({workspace}) => {
         </PopoverContent>
       </Popover>)
 }
+
+interface InvitesProps {
+
+}
+
