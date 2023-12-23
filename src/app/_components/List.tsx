@@ -4,6 +4,8 @@ import { Card } from "./ui/Cards";
 import { ModalCardWrapper } from "./ui/Modal";
 import { Text } from "@chakra-ui/react";
 import { EditTask } from "./EditTask";
+
+
 interface props {
     taskType:string, 
     color:string,

@@ -7,6 +7,8 @@ import { EditTask } from "../EditTask";
 import { Cover } from "./Cover";
 import ui from '../../../styles/ui-module.module.css'
 import useAuth from "~/hooks/useAuth";
+
+
 interface props {
   task: Task;
 }

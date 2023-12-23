@@ -54,6 +54,49 @@ const workspaceRouter = router ({
                 id: input.id
             }
         })
+    }),
+    updateWorkspace: publicProcedure.input (z.object ({
+        id: z.string (),
+        name: z.string (),
+        cover: z.string (),
+        visibility: z.string ()
+    })).mutation (async ({ctx, input})=>{
+        return await ctx.prisma.workspace.update ({
+            where:{
+                id: input.id
+            },
+            data:{
+                name: input.name,
+                image: input.cover,
+                visibility: input.visibility
+            }
+        })
+    }),
+    kickMemberFromWorkspace: publicProcedure.input (z.object ({
+        userId: z.string (),
+        workspaceId:z.string (),
+        memberId: z.string (),
+    })).mutation (async ({ctx, input}) => {
+        const workspace = await ctx.prisma.workspace.findUnique ({
+            where: { id: input.workspaceId}
+        })
+        if (input.userId === workspace?.ownerId) {
+            return ctx.prisma.workspace.update ({
+                where: {
+                    id: input.workspaceId
+                },
+                data: {
+                 members:   {
+                        disconnect: {
+                            id: input.memberId!
+                    }
+                }
+                }
+            })
+        }
+        return {
+            error:'User not authorized to make this action'
+        }
     })
 })
 
