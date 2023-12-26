@@ -7,15 +7,10 @@ interface props {
 const Layout: React.FC<props> = async ({ children }) => {
 
   return (
-   
-     <Stack w='100%' h='100vh'  bg='Primary.100'>
-       <Header />
-       <HStack w='100%' minH={'85%'} spacing={2}>
+       <div className='w-full h-[100vh] flex'>
         <SideNav />
-        <div className="bg-red w-[100%]  flex justify-center items-center">{children}</div>
-      </HStack>
-     </Stack>
-
+        <div className="w-full  flex justify-center items-center bg-lines ml-[320px]">{children}</div>
+      </div>
   );
 };
 

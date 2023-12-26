@@ -5,6 +5,27 @@
 
 @layer components {
     .btn-primary {
-        @apply py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+        @apply py-2 px-4 bg-mainPurple text-white font-semibold rounded-full shadow-md hover:bg-secondaryPurple focus:outline-none ;
+    }
+    .btn-regular-primary {
+        @apply p-2  bg-mainPurple text-white font-semibold rounded-md shadow-md hover:bg-secondaryPurple focus:outline-none ;
+    }
+    .btn-action {
+        @apply py-2 px-3 bg-mainPurple/5 w-full text-secondaryPurple font-semibold rounded-sm  hover:bg-mainPurple/10 ;
+    }
+    .input-regular {
+        @apply w-full rounded-sm border-[1px] border-mediumGray/25 px-4 py-2 text-black outline-none placeholder:text-xs placeholder:text-mediumGray active:outline-none active:ring-2 active:ring-mainPurple ;
+    }
+
+    .btn-ghost-primary {
+        @apply w-full px-12 py-3 text-mainPurple font-semibold bg-transparent hover:bg-mainPurple/10 text-sm active:ring-2 active:ring-mainPurple;
+    }
+
+    .btn-nav {
+        @apply w-[90%] px-12 py-3 border-none focus:bg-mainPurple focus:text-white text-mediumGray hover:bg-secondaryPurple hover:text-white bg-transparent rounded-r-full flex font-semibold justify-start items-center gap-4 ;
+    }
+
+    .btn-column {
+        @apply w-auto h-full px-4 rounded-md bg-[#edf2fb] text-mediumGray font-semibold border-none hover:text-mainPurple active:ring-1 active:ring-mainPurple flex justify-center items-center;
     }
 }

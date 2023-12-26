@@ -2,36 +2,59 @@
 import { usePathname } from "next/navigation";
 import { trpc } from "~/app/_trpc/client";
 import { List } from "~/app/_components/List";
-import { taskStatus } from "../../../../../../constants";
-import { Stack } from "@chakra-ui/react";
 import BoardHeader from "~/app/_components/BoardHeader";
+import { FaPlus } from "react-icons/fa6";
+import NewColumn from "~/app/_components/NewColumn";
+import Modal from "~/app/_components/ui/Modal";
+import toast from "react-hot-toast";
 interface props {}
 
 const page: React.FC<props> = ({}) => {
   const pathname = usePathname();
   const boardId = pathname.split("/")[4];
-  const { data:board } = trpc.boardRouter.getBoardById.useQuery({
+  const { data: board } = trpc.boardRouter.getBoardById.useQuery({
     id: boardId!,
+  });
+  const { data: columns } = trpc.columnRouter.getAll.useQuery({
+    boardId: boardId!,
   });
 
   return (
-    <Stack spacing={3}>
-      <BoardHeader board={board!}/>
-
-      <div className="mx-auto flex h-[90vh] w-[98%] justify-between rounded-[12px] bg-[#2A2D32]">
-        {taskStatus.map((item: TaskStatus, index: number) => {
-          return (
-            <List
-              key={index}
-              taskType={item.label}
-              color={item.color}
-              taskStatus={item.status}
-              boardId={boardId!}
-            />
-          );
-        })}
+    <div className="flex flex-col h-full">
+      <BoardHeader board={board} />
+    {columns && columns.length ? <div className='h-full w-full flex justify-start gap-2 items-start px-6 py-4'>
+      {columns.map ((item, index) => {
+        return <List column={item} key={index} />
+      })}
+      <Modal variant="btn-column" title="Add new column" cardModal={false} value={<div className="flex gap-3 items-center justify-center">
+                <p>New Column</p>
+                <FaPlus />
+              </div>}>
+      <NewColumn boardId={board?.id!} />
+      </Modal>
+    </div> : (
+        <div className="flex h-[100%]  items-center justify-center ">
+        <div className="flex flex-col gap-4">
+          <p className="font-semibold text-mediumGray">
+            This board is empty, create a column to get started.
+          </p>
+          <Modal
+            variant="btn-primary"
+            title="Add new column"
+            cardModal={false}
+            value={
+              <div className="flex gap-3 items-center justify-center">
+                <p>Add New Column</p>
+                <FaPlus />
+              </div>
+            }
+          >
+            <NewColumn boardId={board?.id!} />
+          </Modal>
+        </div>
       </div>
-    </Stack>
+    )}
+    </div>
   );
 };
 

@@ -10,6 +10,7 @@ import subtaskRouter from "./routers/subtask";
 import { commentRouter } from "./routers/comment";
 import attachmentRouter from "./routers/attachment";
 import invitationsRouter from "./routers/invitations";
+import columnRoute from "./routers/column";
 /**
  * This is the primary router for your server.
  *
@@ -23,7 +24,8 @@ export const appRouter = router({
   subtaskRouter:subtaskRouter,
   commentRouter: commentRouter,
   attachmentRouter:attachmentRouter,
-  invitationsRouter:invitationsRouter
+  invitationsRouter:invitationsRouter,
+  columnRouter:columnRoute
 
 });
 // export type definition of API

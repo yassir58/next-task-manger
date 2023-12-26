@@ -107,11 +107,22 @@ model Board {
   name        String     @db.VarChar(255)
   createAt    DateTime   @default(now())
   updateAt    DateTime   @default(now())
-  Task        Task[]
+  columns     Column[]
   workspaceId String?
   workspace   Workspace? @relation("boards", fields: [workspaceId], references: [id])
 
   @@map(name: "boards")
+}
+
+model Column {
+  id        String   @id @default(uuid())
+  name      String   @db.VarChar(255)
+  color     String
+  createdAt DateTime @default(now())
+  updateAt  DateTime @default(now())
+  Task      Task[]
+  boardId   String
+  board     Board    @relation(fields: [boardId], references: [id])
 }
 
 model Task {
@@ -122,8 +133,8 @@ model Task {
   content      String        @db.Text
   Description  String        @db.Text
   status       String        @db.Text
-  boardId      String
-  board        Board         @relation(fields: [boardId], references: [id])
+  columnId     String
+  column       Column        @relation(fields: [columnId], references: [id])
   SubTask      SubTask[]
   Comments     Comment[]
   Attachements Attachement[]

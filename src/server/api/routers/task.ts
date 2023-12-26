@@ -4,12 +4,12 @@ export const taskRouter = router({
   getTasks: publicProcedure
     .input(
       z.object({
-        boardId: z.string(),
+        columnId: z.string(),
       }),
     )
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.task.findMany({
-        where: { boardId: input.boardId },
+        where: { columnId: input.columnId },
       });
     }),
   createTask: publicProcedure
@@ -17,7 +17,7 @@ export const taskRouter = router({
       z.object({
         content: z.string(),
         status: z.string(),
-        boardId: z.string(),
+        columnId: z.string(),
         coverImage: z.string (),
         description:z.string ()
 
@@ -30,8 +30,8 @@ export const taskRouter = router({
           status: input.status,
           coverImage: input.coverImage,
           Description:input.description,
-          board: {
-            connect: { id: input.boardId },
+          column: {
+            connect: { id: input.columnId },
           },
         },
       });
@@ -50,15 +50,13 @@ export const taskRouter = router({
   filterTasksByStatus: publicProcedure
     .input(
       z.object({
-        boardId: z.string(),
-        status: z.string(),
+        columnId: z.string(),
       }),
     )
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.task.findMany({
         where: {
-          boardId: input.boardId,
-          status: input.status,
+          columnId: input.columnId,
         },
       });
     }),

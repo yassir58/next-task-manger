@@ -1,23 +1,8 @@
 'use client'
-import React, { createContext } from "react";
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalCloseButton,
-    useDisclosure,
-    Button,
-    EditableInput,
-    Editable,
-    Icon
-  } from '@chakra-ui/react'
-
-  import { MdSettings } from "react-icons/md";
-
-
+import React, { createContext, useState } from "react";
+import { MdSettings } from "react-icons/md";
 import { Card } from "./Cards";
+import { RxCross1 } from "react-icons/rx";
 interface modalContext {
   isOpen?: boolean;
   onOpen?: () => void;
@@ -26,93 +11,48 @@ interface modalContext {
 export const modalContext = createContext<modalContext>({});
 
 interface modalWrapperProps {
-    variant:string 
+    variant?:string 
+    cardModal: boolean
     children:React.ReactNode,
-    value:any
+    value?:any
+    component?:any
     title:string
     size?:string
-    buttonWidth?:string
 }
 
-export const ModalWrapper:React.FC<modalWrapperProps> = ({children,size='sm', variant, value, title, buttonWidth})=> {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    return (
-      <>
-        <Button w={buttonWidth} variant={variant} onClick={onOpen}>{value}</Button>
-  
-        <Modal  isOpen={isOpen} onClose={onClose} size={size} >
-          <ModalOverlay />
-          <ModalContent bgColor={'#2A2D32'}>
-            <ModalHeader color={'#D6E4FC'}>{title}</ModalHeader>
-            <ModalCloseButton color={'#C4C1BB'}/>
-            <ModalBody>
-                <modalContext.Provider value={{isOpen, onOpen, onClose}}>
-                {children}
-                </modalContext.Provider>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-      </>
-    )
-  }
+const Modal:React.FC<modalWrapperProps> = ({variant, value, size = 'sm', title, children, cardModal}) => {
+
+  const [isOpen, setIsOpen] = useState (false)
+  const onOpen = () => setIsOpen (true)
+  const onClose = () => setIsOpen (false)
+  const sizesMap = new Map ()
+
+  sizesMap.set ("sm", "350px")
+  sizesMap.set ("md", "450px")
+  sizesMap.set ("lg", "550px")
+  sizesMap.set ("xl", "650px")
 
 
-interface ModalCardWrapperProps {
-  task:Task
-  children:React.ReactNode
-}
 
-export const ModalCardWrapper:React.FC<ModalCardWrapperProps> = ({task, children}) =>{
-  const {isOpen, onOpen, onClose} = useDisclosure ()
-  return (<>
-    <div onClick={onOpen} >
-    <Card task={task}/>
+  return<>
+  <button className={`${variant}`} onClick={onOpen}>{value}</button>
+  <div className={`${isOpen ? 'block': 'hidden'} z-30 top-0 left-0 fixed w-[100vw] h-[100vh] flex justify-center items-center`}>
+   <div className="w-[100vw] h-[100vh] top-0 left-0  bg-black/75 " onClick={onClose}></div>
+   <div className='fixed w-[vw] h-[100vh] flex justify-center items-center'>
+   <div className={`w-[${sizesMap.get (size)}] max-w-[${sizesMap.get (size)}] h-auto bg-white fixed  z-50 rounded-md max-h-[650px] overflow-y-auto px-6 py-3 `}>
+    <div className='w-full py-4 flex justify-between items-center'>
+      <p className='text-md font-semibold text-black'>{title}</p>
+     <RxCross1 className='text-mediumGray hover:scale-105' onClick={onClose}/>
     </div>
-    <Modal  isOpen={isOpen} onClose={onClose} size={'3xl'} >
-          <ModalOverlay />
-          <ModalContent bgColor={'#2A2D32'}>
-            <ModalHeader color={'#D6E4FC'}>
-              <Editable>
-              <EditableInput value={task!.content} />
-              </Editable>
-            </ModalHeader>
-            <ModalCloseButton color={'#C4C1BB'}/>
-            <ModalBody>
-                <modalContext.Provider value={{isOpen, onOpen, onClose}}>
-                {children}
-                </modalContext.Provider>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-  </>)
+    <div className="flex flex-col pt-6 w-full h-auto">
+    <modalContext.Provider value={{onClose}}>
+    {children}
+    </modalContext.Provider>
+    </div>
+   </div>
+   </div>
+  </div>
+  </>
 }
 
-interface ModalProfileWrapperProps {
-  children: React.ReactNode
-  value:string
-}
-
-export const ModalProfileWrapper:React.FC<ModalProfileWrapperProps> = ({children, value}) =>{
-  const {isOpen, onOpen, onClose} = useDisclosure ()
-  return (<>
-    <Button fontSize={'15px'} color ='veryLightGray.100' variant='unstyled' onClick={onOpen}>
-      {value}
-    </Button>
-    <Modal  isOpen={isOpen} onClose={onClose} size={'xl'} >
-          <ModalOverlay />
-          <ModalContent bgColor={'#2A2D32'}>
-            <ModalHeader color={'#D6E4FC'}>
-              <Editable>
-              <EditableInput value={'Profile Settings'} />
-              </Editable>
-            </ModalHeader>
-            <ModalCloseButton color={'#C4C1BB'}/>
-            <ModalBody>
-                <modalContext.Provider value={{isOpen, onOpen, onClose}}>
-                {children}
-                </modalContext.Provider>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-  </>)
-}
+export default Modal

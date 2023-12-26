@@ -2,50 +2,37 @@
 import { HStack, Button, Icon, Text } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 import { FaEllipsis, FaPlus } from "react-icons/fa6";
-import { ModalWrapper } from "./ui/Modal";
 import { AddTask } from "./AddTask";
 import Link from "next/link";
 import { MdWorkspaces } from "react-icons/md";
 import { trpc } from "../_trpc/client";
 import ui from '../../styles/ui-module.module.css'
 import { InviteToWorkspace } from "./InviteUser";
+import { FaHome } from "react-icons/fa";
+
 
 interface props {}
 const WorkspaceHeader: React.FC<props> = ({}) => {
 
   const pathname = usePathname ()
-  const boardId = pathname.split("/")[4];
-  const {data:board} = trpc.boardRouter.getBoardById.useQuery ({
-    id: boardId!
-  })
+  const workspaceId = pathname.split("/")[2];
   const {data:workspace} = trpc.workspaceRouter.getWorkspaceById.useQuery ({
-    id : board?.workspaceId!
+    id : workspaceId!
   })
 
   return (
-    <HStack w="100%" justifyContent={"space-between"} alignItems={"center"} px={4} py={4}>
-      <HStack spacing={3}>
-            <Link href="/">
-              <Button variant="lightGhost">
-                <HStack spacing={6}>
-                  <Text>Workspaces</Text>
-                  <Icon as={MdWorkspaces} />
-                </HStack>
-              </Button>
-            </Link>
-          
-      </HStack>
+    <div className='bg-white flex w-[100%] items-center justify-between border-b-[1px] border-b-lines px-12 py-4'>
+      <h2 className='text-darkGray text-lg font-semibold'>{workspace?.name}</h2>
 
-      <HStack spacing={4} >
-        <InviteToWorkspace workspace={workspace!} />
-        <Button variant={"lightGhost"} >
-          <HStack spacing={4}>
-            <Text>Menu</Text>
-            <Icon as={FaEllipsis} />
-          </HStack>
-        </Button>
-      </HStack>
-    </HStack>
+     <div className='flex gap-6 justify-center items-center'>
+    <Link href='/'>
+    <button className="btn-regular-primary">
+      <FaHome className='text-md'/>
+     </button>
+    </Link>
+      <FaEllipsis className='text-mediumGray text-md hover:scale-105' />
+     </div>
+    </div>
   );
 };
 

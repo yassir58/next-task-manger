@@ -15,22 +15,18 @@ const Workspaces: React.FC<props> = ({}) => {
   if (isLoading) return <LoaderIcon />;
   if (data && !data.length)
     return (
-      <Text color="veryLightGray.100" fontSize="18px">
+      <p className="text-md font-semibold text-mediumGray">
         You have no workspaces
-      </Text>
+      </p>
     );
   return (
-    <HStack
-      justify={"start"}
-      alignItems="center"
-      spacing={6}
-      flexWrap="wrap"
-      w='96%'
+    <div
+      className='w-full px-16 py-6 flex justify-start items-center gap-3 flex-wrap'
     >
         {data && data.map ((workspace:Workspace, index:number)=>{
             return <WorkspaceCard workspace={workspace} key={index} />
         })}
-    </HStack>
+    </div>
   );
 };
 

@@ -6,12 +6,9 @@ interface props {
     children: React.ReactNode
 }
 const Layout:React.FC<props> = ({children}) => {
-    return (<Stack spacing={2} w='100%' h='100%'>
-    <WorkspaceHeader />
-    <Stack w='98%' h='80vh' borderRadius={'12px'} bg='LightGray.100' justifyContent={'start'} spacing={4} alignItems={'center'}>
+    return (<div className='w-full h-full'>
         {children}
-    </Stack>
-    </Stack>
+    </div>
     
    )
 }

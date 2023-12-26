@@ -175,10 +175,7 @@ const theme = extendTheme({
     },
     styles: {
       global: {
-        body: {
-          bg: "#252932",
-          mx: "auto",
-        },
+        
       },
     },
     colors: {

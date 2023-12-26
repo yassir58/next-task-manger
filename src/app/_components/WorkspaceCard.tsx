@@ -8,12 +8,13 @@ interface props {
 const WorkspaceCard:React.FC<props> = ({workspace}) =>{
 
     const router = useRouter ()
-    return (<Stack minW='300px' px={4} py={2} spacing={4} bg='Primary.100' borderRadius={'lg'} shadow={'sm'} _hover={{opacity:0.8}} _active={{transform:'scale(1.1)'}}
+    return (<div 
+        className='bg-white min-w-[300px] rounded-md shadow-sm hover:shadow-md hover:bg-opacity-90 px-4 py-2 flex flex-col items-start justify-center gap-4'
         onClick={() => router.push (`/w/${workspace.id}`)}
     >
         <Cover image={workspace.image} />
-        <Text fontSize='20px' color='veryLightGray.100'>{workspace.name}</Text>
-    </Stack>)
+        <p className="text-lg text-darkGray   font-semibold">{workspace.name}</p>
+    </div>)
 }
 
 export default WorkspaceCard

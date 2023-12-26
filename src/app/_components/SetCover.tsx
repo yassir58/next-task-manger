@@ -19,9 +19,10 @@ import ui from "../../styles/ui-module.module.css";
 interface props {
   coverSetter?: (value: string) => void;
   submitHandler?: () => void;
+  cancelHandler?: (value:boolean) =>  void
 }
 
-export const SetCover: React.FC<props> = ({ coverSetter, submitHandler }) => {
+export const SetCover: React.FC<props> = ({ coverSetter, submitHandler , cancelHandler}) => {
   const [covers, setCovers] = useState([]);
   const [input, setInput] = useState("");
   const { onClose } = useContext(modalContext);
@@ -42,22 +43,14 @@ export const SetCover: React.FC<props> = ({ coverSetter, submitHandler }) => {
   });
 
   return (
-    <Stack justifyContent={"center"} alignItems="center" spacing={4}>
-      <InputGroup>
-        <Input variant="regular" placeholder="search for covers" />
-        <InputRightElement>
-          <BiSearch color="gray.500" />
-        </InputRightElement>
-      </InputGroup>
+    <div className="flex flex-col max-w-[350px] gap-6 justify-center items-start">
+     <input className='input-regular' placeholder="Seach for photos by keyword" />
 
       {!covers.length ? (
         <LoaderIcon />
       ) : (
-        <HStack
-          flexWrap={"wrap"}
-          spacing={2}
-          alignItems="center"
-          justifyContent={"center"}
+        <div
+          className='flex flex-wrap gap-2 items-center justify-start'
         >
           {covers.map((cover: string, index: number) => {
             return (
@@ -75,25 +68,24 @@ export const SetCover: React.FC<props> = ({ coverSetter, submitHandler }) => {
               />
             );
           })}
-        </HStack>
+        </div>
       )}
-      <HStack spacing={4} w="100%">
+      <div className='flex gap-3'>
         {submitHandler ? (
           <button
             onClick={() =>{ 
               submitHandler ();
-              onClose! ();
             }}
             className={`${ui.Grad} mx-auto rounded-full px-4 py-2 text-[#D6E4FC] hover:opacity-80`}
           >
             Change cover
           </button>
         ) : (
-          <button className="btn-primary" onClick={onClose}>
+          <button className="btn-primary" onClick={() => cancelHandler! (false)}>
             done
           </button>
         )}
-      </HStack>
-    </Stack>
+      </div>
+    </div>
   );
 };
