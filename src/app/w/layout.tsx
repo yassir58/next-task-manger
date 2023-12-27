@@ -9,7 +9,7 @@ const Layout: React.FC<props> = async ({ children }) => {
   return (
        <div className='w-full h-[100vh] flex'>
         <SideNav />
-        <div className="w-full  flex justify-center items-center bg-lines ml-[320px]">{children}</div>
+        <div className="w-full  flex justify-center items-center bg-[#edf2fb] ml-[320px]">{children}</div>
       </div>
   );
 };

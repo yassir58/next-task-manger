@@ -20,9 +20,9 @@ const page: React.FC<props> = ({}) => {
   });
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full">
       <BoardHeader board={board} />
-    {columns && columns.length ? <div className='h-full w-full flex justify-start gap-2 items-start px-6 py-4'>
+    {columns && columns.length ? <div className='h-full relative z-10 w-full flex justify-start gap-2 items-start px-6 py-4 max-w-[75vw] overflow-x-auto'>
       {columns.map ((item, index) => {
         return <List column={item} key={index} />
       })}
@@ -34,12 +34,12 @@ const page: React.FC<props> = ({}) => {
       </Modal>
     </div> : (
         <div className="flex h-[100%]  items-center justify-center ">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 justify-center items-center">
           <p className="font-semibold text-mediumGray">
             This board is empty, create a column to get started.
           </p>
           <Modal
-            variant="btn-primary"
+            variant="btn-primary max-w-[250px]"
             title="Add new column"
             cardModal={false}
             value={

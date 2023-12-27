@@ -21,9 +21,9 @@ interface props {
 }
 const AddDescription: React.FC<props> = ({ task }) => {
   const utils = trpc.useUtils();
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(task.Description);
   const [edit, setEdit] = useState(false);
-  const [add, setAdd] = useState(false)
+  const [add, setAdd] = useState(false);
   const addDescriptionMutation = trpc.taskRouter.editeTask.useMutation({
     onSuccess: () => {
       toast.success("description added succesfully");
@@ -38,85 +38,51 @@ const AddDescription: React.FC<props> = ({ task }) => {
       content: task.content,
       status: task.status,
       description: value,
-      cover:task.coverImage
+      cover: task.coverImage,
     });
   };
   return (
-    <Stack spacing={3}>
-      <HStack justifyContent='space-between'>
-      <HStack spacing={4}>
-        <Icon as={MdOutlineDescription} color="gray.500" fontSize={"16px"} />
-        <Text fontSize="sm" color="gray.500">
-          Description
-        </Text>
-      </HStack>
-
-      {task.Description === '' ? <Button onClick={() => setAdd (true)} colorScheme='blue'>
-        <Icon as={FaPlus} />
-      </Button> : <Button onClick={() => setEdit (true)} colorScheme='blue'>
-        <Icon as={FaPen} />
-      </Button> }
-      </HStack>
-      {add ? <Textarea 
-        borderRadius="8px"
-        px={4}
-        py={2}
-        bg="rgba(255,255,255,0.1)"
-        onChange={(e) => setValue(e.target.value)}
-        onFocus={() => setEdit(true)}
-        color="gray.400"
-        fontSize="18px"
-        placeholder="Add task description"
-        _placeholder={{
-          fontStyle: "italic",
-          color: "veryLightGray.100",
-          fontSize: "sm",
-        }}
-      /> : ''}
-    {task.Description !== '' ?  <Editable defaultValue={task.Description}>
-        <EditablePreview color="veryLightGray.100" fontSize="18px" />
-        <Textarea
-          as={EditableTextarea}
-          borderRadius="8px"
-          px="4px"
-          py="2px"
-          bg="rgba(255,255,255,0.1)"
-          onChange={(e) => setValue(e.target.value)}
-          onFocus={() => setEdit(true)}
-          color="veryLightGray.100"
-          fontSize="18px"
-          placeholder="Edit task description"
-          _placeholder={{
-            fontStyle: "italic",
-            color: "gray.400",
-            fontSize: "sm",
-          }}
-        /> 
-        </Editable>
-        : ''}
-      
-      {edit || add ? (
-        <HStack spacing={4}>
-          <Button
-            colorScheme="green"
-            onClick={() => {
-                setAdd (false);
-              setEdit(false);
-              editTask();
-            }}
-          >
-            save
-          </Button>
-          <Button colorScheme="ghost" onClick={() => {
-            setAdd (false)
-            setEdit(false)}}>
-            cancel
-          </Button>
-        </HStack>
+    <div className="group relative">
+          <div onClick={() => setEdit (true)} className={`hidden absolute right-0 group-hover:${edit ? 'hidden' : 'flex'} bg-lines/30 text-mainPurple px-6 py-8 justify-center items-center w-full h-full `}>
+            <button className='btn-regular-primary rounded-full' >
+                <FaPen className='text-sm'/>
+            </button>
+          </div>
+      {edit ? (
+        <div className="flex w-full flex-col items-start justify-start gap-2">
+          <textarea
+          rows={3}
+          cols={30}
+            className="input-regular"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <div className="flex gap-2">
+            <button
+              className="btn-primary"
+              onClick={() => {
+                editTask();
+                setEdit(false);
+              }}
+            >
+              save
+            </button>
+            <button
+              className="btn-ghost-regular"
+              onClick={() => {
+                setEdit(false);
+              }}
+            >
+              cancel
+            </button>
+          </div>
+        </div>
       ) : (
-        ""
+        <h2 className="text-sm font-semibold text-mediumGray">
+          {task.Description}
+        </h2>
       )}
-    </Stack>
+    </div>
   );
 };
 

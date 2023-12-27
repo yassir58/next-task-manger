@@ -1,26 +1,40 @@
 import { GoDotFill } from "react-icons/go";
 import { trpc } from "../_trpc/client";
 import { Card } from "./ui/Cards";
-
+import Modal from "./ui/Modal";
+import { EditTask } from "./EditTask";
 
 interface props {
-   column:any
+  column: any;
 }
 
-export const List:React.FC<props> = ({column}) =>{
-
-    const {data:tasks} = trpc.taskRouter.getTasks.useQuery ({
-        columnId:column.id!,
-      })
-    return (<div className='max-w-[300px] min-w-[250px] flex flex-col gap-6 h-[100%]'>
-        <div className="flex gap-3 justify-start items-center">
-            <GoDotFill fontSize='18px' color={column.color}/>
-            <p className=' text-[#C4C1BB] text-l'>{tasks?.length ? `${column.name} (${tasks?.length})` : column.name}</p>
-        </div>
-        <div className='w-[98%] flex flex-col gap-4 overflow-auto  max-h-[100%]'>
-            {tasks && tasks!.map ((item:any, index:number)=>{
-                return <Card task={item} key={index} />
-            })}
-        </div>
-    </div>)
-}
+export const List: React.FC<props> = ({ column }) => {
+  const { data: tasks } = trpc.taskRouter.getTasks.useQuery({
+    columnId: column.id!,
+  });
+  return (
+    <div className="flex h-[100%] min-w-[250px] max-w-[300px] flex-col gap-6">
+      <div className="flex items-center justify-start gap-3">
+        <GoDotFill fontSize="18px" color={column.color} />
+        <p className=" text-l font-semibold text-mediumGray">
+          {tasks?.length ? `${column.name} (${tasks?.length})` : column.name}
+        </p>
+      </div>
+      <div className="flex max-h-[90%] w-[98%] flex-col justify-start gap-4 overflow-y-auto p-4">
+        {tasks &&
+          tasks!.map((item: any, index: number) => {
+            return (
+              <Modal
+                size='full'
+                title=""
+                card={<Card task={item} key={index} />}
+                cardModal={true}
+              >
+                <EditTask task={item} />
+              </Modal>
+            );
+          })}
+      </div>
+    </div>
+  );
+};

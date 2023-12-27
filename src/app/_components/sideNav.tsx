@@ -26,6 +26,7 @@ import Modal from "./ui/Modal";
 import { z } from "zod";
 import DarkLogo from "./ui/icons/darkLogo";
 import BoardIcon from "./ui/icons/BoardIcon";
+import Popover from "./ui/Popover";
 
 interface props {}
 
@@ -101,9 +102,9 @@ export const SideNav: React.FC<props> = ({}) => {
       <div className="px-12 py-3">
         <DarkLogo />
       </div>
-      <div className="flex flex-col gap-4">
-        <h2 className="text-md px-12 py-4 text-mediumGray">ALL BOARDS (0)</h2>
-        <div className="flex flex-col items-start justify-center gap-4">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-md px-12 py-4 text-mediumGray">ALL BOARDS ({boards ? boards!.length : 0})</h2>
+        <div className="flex flex-col items-start justify-center gap-4 max-h-[50vh] overflow-y-auto pt-12">
           {boards && boards!.map((item, index) => {
             return (
                 <button className="btn-nav" onClick={() => router.replace (`/w/${workspaceId}/boards/${item.id}`)} key={index}>
@@ -113,10 +114,10 @@ export const SideNav: React.FC<props> = ({}) => {
             );
           })}
         </div>
-        <Modal
+        <Popover
           title="Create new Board"
           variant="btn-ghost-primary"
-          cardModal={false}
+          position='top'
           value={
             <div className="flex w-full items-center justify-between">
               <p>Create new board</p>
@@ -125,7 +126,7 @@ export const SideNav: React.FC<props> = ({}) => {
           }
         >
           <NewBoard />
-        </Modal>
+        </Popover>
       </div>
     </div>
   );

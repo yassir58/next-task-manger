@@ -7,6 +7,9 @@
     .btn-primary {
         @apply py-2 px-4 bg-mainPurple text-white font-semibold rounded-full shadow-md hover:bg-secondaryPurple focus:outline-none ;
     }
+    .btn-ghost-regular {
+        @apply py-2 px-4 hover:text-mainPurple text-mediumGray font-semibold rounded-full  hover:bg-lines focus:outline-none ;
+    }
     .btn-regular-primary {
         @apply p-2  bg-mainPurple text-white font-semibold rounded-md shadow-md hover:bg-secondaryPurple focus:outline-none ;
     }
@@ -18,14 +21,20 @@
     }
 
     .btn-ghost-primary {
-        @apply w-full px-12 py-3 text-mainPurple font-semibold bg-transparent hover:bg-mainPurple/10 text-sm active:ring-2 active:ring-mainPurple;
+        @apply  w-[90%] px-12 py-3 text-mainPurple rounded-r-full font-semibold bg-transparent hover:bg-mainPurple/10 text-sm active:ring-2 active:ring-mainPurple;
     }
 
     .btn-nav {
-        @apply w-[90%] px-12 py-3 border-none focus:bg-mainPurple focus:text-white text-mediumGray hover:bg-secondaryPurple hover:text-white bg-transparent rounded-r-full flex font-semibold justify-start items-center gap-4 ;
+        @apply w-[90%] pl-12 py-3 border-none focus:bg-mainPurple focus:text-white text-mediumGray hover:bg-lines hover:text-mainPurple bg-transparent rounded-r-full flex font-semibold justify-start items-center gap-2 ;
     }
 
+    .btn-unstyled {
+        @apply bg-transparent border-none px-4 py-2 text-mediumGray hover:text-mainPurple hover:scale-105;
+    }
     .btn-column {
-        @apply w-auto h-full px-4 rounded-md bg-[#edf2fb] text-mediumGray font-semibold border-none hover:text-mainPurple active:ring-1 active:ring-mainPurple flex justify-center items-center;
+        @apply w-auto h-full px-4 rounded-md bg-lines text-mediumGray font-semibold border-none hover:text-mainPurple active:ring-1 active:ring-mainPurple flex justify-center items-center ;
+    }
+    .btn-link {
+        @apply w-[95%] text-mediumGray font-semibold bg-transparent hover:text-mainPurple hover:bg-lines rounded-sm px-2 py-1 flex justify-start items-center;
     }
 }

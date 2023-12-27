@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { SelectInput } from "./ui/Input";
 import { trpc } from "../_trpc/client";
 import { modalContext } from "./ui/Modal";
@@ -26,7 +26,7 @@ export const AddTask: React.FC<props> = ({ boardId }) => {
   const { data: columns } = trpc.columnRouter.getAll.useQuery({
     boardId: boardId!,
   });
-  const [status, setStatus] = useState(columns ? columns[0]?.name! : "");
+  const [status, setStatus] = useState("");
   const createTaskMutation = trpc.taskRouter.createTask.useMutation({
     onSuccess: (data: any) => {
       toast.success("Task created successfully");
@@ -54,6 +54,11 @@ export const AddTask: React.FC<props> = ({ boardId }) => {
       }
     }
   };
+
+  useEffect (() => {
+    if (columns)
+      setStatus (columns[0]?.name!)
+  }, [columns])
   return (
     <div className="flex flex-col gap-6">
       {cover.length ? <Cover image={cover} /> : ""}
@@ -118,6 +123,8 @@ export const AddTask: React.FC<props> = ({ boardId }) => {
         className={`btn-primary`}
         onClick={() => {
           addTask();
+          setInput ('')
+          setDescription ('')
           onClose!();
         }}
       >
