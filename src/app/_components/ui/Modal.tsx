@@ -39,7 +39,7 @@ const Modal: React.FC<modalWrapperProps> = ({
   sizesMap.set("md", {w:"450px", h:'auto', maxH:'[650px]'});
   sizesMap.set("lg", {w:"550px", h:'auto', maxH:'[650px]'});
   sizesMap.set("xl", {w:"650px", h:'auto', maxH:'[650px]'});
-  sizesMap.set("full", {w:"100vw", h:'[100vh]', maxH:'[100vh]'});
+  sizesMap.set("full", {w:"50vw", h:'[50vh]', maxH:'[60vh]'});
 
 
   return (

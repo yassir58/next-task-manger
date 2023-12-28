@@ -120,7 +120,7 @@ export const AddTask: React.FC<props> = ({ boardId }) => {
           })}
       </select>
       <button
-        className={`btn-primary`}
+        className='btn-primary'
         onClick={() => {
           addTask();
           setInput ('')

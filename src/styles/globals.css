@@ -35,6 +35,16 @@
         @apply w-auto h-full px-4 rounded-md bg-lines text-mediumGray font-semibold border-none hover:text-mainPurple active:ring-1 active:ring-mainPurple flex justify-center items-center ;
     }
     .btn-link {
-        @apply w-[95%] text-mediumGray font-semibold bg-transparent hover:text-mainPurple hover:bg-lines rounded-sm px-2 py-1 flex justify-start items-center;
+        @apply w-full text-mediumGray  bg-transparent hover:text-mainPurple hover:bg-lines rounded-r-full px-4 py-2 flex justify-start items-center;
+    }
+    .btn-danger {
+        @apply w-full text-mainRed bg-transparent hover:bg-secondaryRed/40 rounded-r-full px-4 py-2 flex justify-start items-center;
+    }
+    .btn-del-col {
+        @apply w-[100%] px-4 py-2 rounded-sm border-[1px] border-mediumGray hover:border-mainPurple text-sm text-mediumGray hover:text-mainPurple flex justify-between items-center ;
+    }
+
+    .btn-red-primary {
+        @apply w-full px-4 py-2 rounded-full border-none bg-mainRed hover:bg-secondaryRed text-white font-semibold ;
     }
 }

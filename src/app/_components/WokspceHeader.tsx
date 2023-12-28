@@ -50,7 +50,8 @@ const WorkspaceHeader: React.FC<props> = ({}) => {
           position="bottom"
           variant="btn-unsyled"
         >
-          <BoardSettings />
+          <p>workspace settings</p>
+          {/* <BoardSettings /> */}
         </Popover>
       </div>
     </div>

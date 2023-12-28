@@ -34,8 +34,9 @@ const AddSubtask:React.FC<props> = ({task}) =>{
     }
     const {onClose} = useContext (modalContext);
     return (<Stack spacing={4}>
-        <Input variant='regular' value={content}  placeholder='subtask content' onChange={(e) => setContent (e.target.value)}/>
-        <button className={`${ui.Grad} text-[#D6E4FC] rounded-full px-4 py-2 hover:opacity-80`} onClick={()=>{
+        <label className='text-sm font-semibold text-veryDarkGray' htmlFor="subtask">Subtask content</label>
+        <input className='input-regular' id='subtask' value={content}  placeholder='subtask content' onChange={(e) => setContent (e.target.value)}/>
+        <button className={`btn-primary`} onClick={()=>{
         addSubTask ()
         onClose! ()
       }}>add</button>

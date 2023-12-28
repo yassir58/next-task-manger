@@ -1,7 +1,5 @@
 import {z} from 'zod'
-import { FaImage, FaPaperclip } from 'react-icons/fa6';
-import { IoMdCheckboxOutline } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
+
 
 export const requestSchema = z.object({
     name: z.string(),
@@ -16,8 +14,8 @@ export const taskStatus:TaskStatus[] = [
 ];
 
 export const actions = [
-  {actionName:'Add attachement', status:'regular', icon:FaPaperclip},
-  {actionName:'Add Subtask', status:'regular', icon:IoMdCheckboxOutline},
-  {actionName:'Change Cover', status:'regular', icon:FaImage},
-  {actionName: 'Delete Task', status:'danger', icon:MdDelete},
+  {actionName:'Add attachement', status:'regular'},
+  {actionName:'Add Subtask', status:'regular'},
+  {actionName:'Change Cover', status:'regular'},
+  {actionName: 'Delete Task', status:'danger'},
 ]

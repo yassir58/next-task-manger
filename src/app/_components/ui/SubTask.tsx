@@ -1,4 +1,3 @@
-import { HStack, Text, Icon } from "@chakra-ui/react";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
@@ -47,44 +46,29 @@ const Subtask: React.FC<props> = ({ subtask }) => {
     }
   };
   return (
-    <HStack justifyContent={"space-between"}>
-      <HStack spacing={4}>
+    <div className="flex w-full justify-between items-center">
+      <div className='flex gap-4 justify-center items-center'>
         {subtask.done === false? (
-          <Icon
+          <MdCheckBoxOutlineBlank
             onClick={editeSubtask}
-            as={MdCheckBoxOutlineBlank}
-            color="gray.400"
-            fontSize="18px"
-            _hover={{
-                opacity:0.8,
-                transform:'scale(1.1)'
-            }}
+            className='text-mediumGray text-[18px] hover:scale-105'
           />
         ) : (
-          <Icon
+          <IoMdCheckboxOutline
             onClick={editeSubtask}
-            as={IoMdCheckboxOutline}
-            color="green.400"
-            fontSize="18px"
-            _hover={{
-                opacity:0.8,
-                transform:'scale(1.1)'
-            }}
+            className='text-mainPurple hover:scale-105 text-[18px]'
           />
         )}
-        <Text color="veryLightGray.100" fontSize="16px">
+        <p className='text-mediumGray font-semibold'>
           {subtask.content}
-        </Text>
-      </HStack>
+        </p>
+      </div>
 
-      <Icon
+      <MdDelete
         onClick={deleteSubtask}
-        as={MdDelete}
-        color="gray.400"
-        fontSize="18px"
-        _hover={{ opacity: 0.8 , transform:'scale(1.1)'}}
+        className='text-mediumGray hover:scale-105'
       />
-    </HStack>
+    </div>
   );
 };
 

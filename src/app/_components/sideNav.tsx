@@ -115,6 +115,7 @@ export const SideNav: React.FC<props> = ({}) => {
           })}
         </div>
         <Popover
+          header={true}
           title="Create new Board"
           variant="btn-ghost-primary"
           position='top'

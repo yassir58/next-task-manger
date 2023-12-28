@@ -4,7 +4,7 @@ import { trpc } from "../_trpc/client";
 import toast from "react-hot-toast";
 import { SelectInput } from "./ui/Input";
 import { Cover } from "./ui/Cover";
-
+import Popover from "./ui/Popover";
 import { actions } from "../../../constants";
 import DeleteTask from "./DeleteTask";
 import { FaCheck } from "react-icons/fa";
@@ -18,6 +18,10 @@ import CommentsList from "./CommentsList";
 import AddAttachements from "./AddAttachements";
 import AttachmentsList from "./AttachmentsList";
 import { FaPen } from "react-icons/fa6";
+import { FaImage, FaPaperclip } from 'react-icons/fa6';
+import { IoMdCheckboxOutline } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
+import { FaEllipsisV } from "react-icons/fa";
 interface props {
   task: Task;
 }
@@ -30,6 +34,7 @@ export const EditTask: React.FC<props> = ({ task }) => {
   const [cover, setCover] = useState(task.coverImage);
   const utils = trpc.useUtils();
   const actionsMap = new Map();
+  
   const titleInputRef = useRef<HTMLInputElement | null>(null);
   const descriptionRef = useRef<HTMLInputElement | null>(null);
 
@@ -42,12 +47,13 @@ export const EditTask: React.FC<props> = ({ task }) => {
       cover: cover,
     });
   };
-  actionsMap.set("Delete Task", <DeleteTask task={task} />);
-  actionsMap.set("Add Subtask", <AddSubtask task={task} />);
-  actionsMap.set("Add attachement", <AddAttachements task={task} />);
+  
+  actionsMap.set("Delete Task", {component:<DeleteTask task={task} />, icon:<MdDelete/>});
+  actionsMap.set("Add Subtask", {component:<AddSubtask task={task} />, icon:<IoMdCheckboxOutline/>});
+  actionsMap.set("Add attachement", {component:<AddAttachements task={task} />, icon:<FaPaperclip/>});
   actionsMap.set(
     "Change Cover",
-    <SetCover coverSetter={setCover} submitHandler={changeCover} />,
+    {component: <SetCover coverSetter={setCover} submitHandler={changeCover} />, icon:<FaImage/>},
   );
 
   const editTaskMutation = trpc.taskRouter.editeTask.useMutation({
@@ -75,7 +81,7 @@ export const EditTask: React.FC<props> = ({ task }) => {
     }
   };
   return (
-    <div className="flex h-full w-[50vw] items-center justify-center mx-auto">
+    <div className="flex h-full w-full items-center justify-center mx-auto">
       <div className="flex h-full w-full  flex-col gap-6">
         {cover.length ? <Cover image={cover} /> : ""}
         <div className="grid h-full w-full grid-flow-row gap-8 md:grid-cols-[1fr_200px]">
@@ -110,31 +116,26 @@ export const EditTask: React.FC<props> = ({ task }) => {
                 </h2>
               )}
 
-              {onEdit ? (
-                ""
-              ) : (
-                <button
-                  className="btn-regular-primary"
-                  onClick={() => setOnEdit(true)}
-                >
-                  <FaPen />
-                </button>
-              )}
+  <Popover title='settings' value={<FaEllipsisV className='text-mediumGray hover:text-mainPurple' />} position="bottom" variant="btn-unsyled">
+    <p>some settings</p>    
+    </Popover>
             </div>
             <AddDescription task={task} />
-          {/* <AddComment task={task} />
+            {/* <AddComment task={task} /> */}
+            <Subtasks task={task} />
+          {/*
           <CommentsList task={task} />
           <AttachmentsList task={task} />
-          <Subtasks task={task} /> */}
+           */}
           </div>
           <div className="flex flex-col items-start justify-start gap-2">
             {actions.map((action: any, index: number) => {
             return (
               <Modal  title={action.actionName} cardModal={false} value={<div className='flex w-full justify-between items-center' > 
                 <p>{action.actionName}</p>
-                {action.icon}
+                {actionsMap.get (action.actionName).icon}
               </div>} variant="btn-action">
-                    {actionsMap.get (action.actionName)}
+                    {actionsMap.get (action.actionName).component}
               </Modal>
             );
           })}

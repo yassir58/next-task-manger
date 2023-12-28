@@ -43,6 +43,19 @@ export const boardRouter = router({
       });
       return createdBoard;
     }),
+    updateBoard: publicProcedure.input (z.object ({
+      boardId:z.string (),
+      name: z.string ()
+    })).mutation (async ({ctx, input}) => {{{{
+      return await ctx.prisma.board.update ({
+        where: {
+          id: input.boardId
+        },
+        data: {
+          name: input.name
+        }
+      })
+    }}}}),
     deleteBoard: publicProcedure.input (z.object ({
         boardId:z.string ()
     })).mutation (async ({ctx, input})=>{
