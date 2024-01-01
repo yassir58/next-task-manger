@@ -29,7 +29,7 @@ const DeleteBoard:React.FC<props> = ({board}) => {
             boardId: board?.id!
         })
     }
-    return (<div className="flex flex-col gap-4 min-w-[20vw]">
+    return (<div className="flex flex-col gap-4 min-w-[400px]">
         <p className='font-semibold text-mainRed text-lg'>Delete this board ?</p>
         <p className="font-semibold text-mediumGray">Are you sure you want to delete the ‘{board.name}’ board? This action will remove all columns and tasks and cannot be reversed.</p>
         <div className="flex  gap-2 w-full justify-center items-center">

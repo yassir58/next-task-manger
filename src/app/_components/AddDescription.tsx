@@ -18,12 +18,12 @@ import { FaPlus, FaPen } from "react-icons/fa6";
 
 interface props {
   task: Task;
+  editDisc: boolean
+  setEditDisc: (value:boolean) => void
 }
-const AddDescription: React.FC<props> = ({ task }) => {
+const AddDescription: React.FC<props> = ({ task, editDisc, setEditDisc }) => {
   const utils = trpc.useUtils();
   const [value, setValue] = useState(task.Description);
-  const [edit, setEdit] = useState(false);
-  const [add, setAdd] = useState(false);
   const addDescriptionMutation = trpc.taskRouter.editeTask.useMutation({
     onSuccess: () => {
       toast.success("description added succesfully");
@@ -43,12 +43,8 @@ const AddDescription: React.FC<props> = ({ task }) => {
   };
   return (
     <div className="group relative">
-          <div onClick={() => setEdit (true)} className={`hidden absolute right-0 group-hover:${edit ? 'hidden' : 'flex'} bg-lines/30 text-mainPurple px-6 py-8 justify-center items-center w-full h-full `}>
-            <button className='btn-regular-primary rounded-full' >
-                <FaPen className='text-sm'/>
-            </button>
-          </div>
-      {edit ? (
+          
+      {editDisc ? (
         <div className="flex w-full flex-col items-start justify-start gap-2">
           <textarea
           rows={3}
@@ -62,7 +58,7 @@ const AddDescription: React.FC<props> = ({ task }) => {
               className="btn-primary"
               onClick={() => {
                 editTask();
-                setEdit(false);
+                setEditDisc(false);
               }}
             >
               save
@@ -70,7 +66,7 @@ const AddDescription: React.FC<props> = ({ task }) => {
             <button
               className="btn-ghost-regular"
               onClick={() => {
-                setEdit(false);
+                setEditDisc(false);
               }}
             >
               cancel
@@ -78,7 +74,7 @@ const AddDescription: React.FC<props> = ({ task }) => {
           </div>
         </div>
       ) : (
-        <h2 className="text-sm font-semibold text-mediumGray">
+        <h2 className="text-sm  text-mediumGray">
           {task.Description}
         </h2>
       )}

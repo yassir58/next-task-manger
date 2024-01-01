@@ -1,11 +1,8 @@
-import { Button, Stack, Avatar, Text, Input,HStack, Popover, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger, PopoverHeader, Icon, InputGroup, InputRightElement } from "@chakra-ui/react"
 import { useState } from "react"
 import { trpc } from "../_trpc/client"
-import { FaPlus } from "react-icons/fa6"
-import { FaSearch } from "react-icons/fa"
 import useAuth from "~/hooks/useAuth"
 import toast from "react-hot-toast"
-
+import Avatar from "./ui/Avatar"
 interface props {
     workspace:Workspace
 }
@@ -17,12 +14,12 @@ interface InviteFieldProps {
 }
 
 export const InviteFeild:React.FC<InviteFieldProps> = ({user, handleClick, selected}) => {
-    return (<Button w='100%' border={`${user.id === selected?.id ? '2px': 'none' }`} borderColor='BlueSky.100' variant='userField' onClick={() => handleClick! (user)}>
-       <HStack w='100%' spacing={4} justifyContent='start' alignItems='center'>
-       <Avatar src={user.profileImage} name={user.name} size='md' borderRadius='md' />
-        <Text color='veryLightGray.100' fontSize='17px'>{user.name}</Text>
-       </HStack>
-    </Button>)
+    return (<button className={`${user.id === selected?.id ? 'btn-field-active' :'btn-field'}`} onClick={() => handleClick (user)}>
+       <div className='flex gap-5 w-full h-full justify-start items-center'>
+       <Avatar image={user.profileImage!} name={user.name!}  />
+        <p className='font-semibold'>{user.name}</p>
+       </div>
+    </button>)
 }
 
 export const InviteUser:React.FC<props> = ({workspace}) => {
@@ -32,6 +29,7 @@ export const InviteUser:React.FC<props> = ({workspace}) => {
     const utils  = trpc.useUtils ()
     const {data:users} = trpc.userRouter.getAllUsers.useQuery ();
     const [search , setSearch] = useState ('')
+    const [members , setMembers] = useState<User[]> ([])
     const inviteMutation = trpc.invitationsRouter.sendInvite.useMutation ({
       onSuccess: () => {
           toast.success ('Invite sent successfully')
@@ -55,41 +53,24 @@ export const InviteUser:React.FC<props> = ({workspace}) => {
       }
     }
 
-    return (<Stack w='100%' spacing={6} justifyContent={'center'} alignItems='center'> 
-            <InputGroup>
-            <Input variant='regular' placeholder='search for users'/>
-            <InputRightElement>
-            <Icon as={FaSearch} fontSize={'15px'} color='gray.500' />
-            </InputRightElement>
-            </InputGroup>
+    const filterMembers = () => {
+      const filterdMembers = users ? users?.filter ((user) => user.name.includes (search)) : [] ;
+      setMembers (filterdMembers!);
+    }
+    return (<div className='flex flex-col gap-8'> 
+            <input className='input-regular' value={search} placeholder='search for users' onChange={(e) => {
+              setSearch (e.target.value)
+              filterMembers ()
+            }}/>
 
-            <Stack spacing={3} w='100%'>
-                {users && users.map ((user:any, index:number)=>{
+            <div className='flex flex-col gap-2'>
+                {members && members.map ((user:any, index:number)=>{
                     return <InviteFeild user={user} handleClick={setUser} selected={selected} key={index}/>
                 })}
-            </Stack>
+            </div>
             <button className='btn-primary' onClick={sendInvite}> invite </button>
-    </Stack>)
+    </div>)
 }
 
-export const InviteToWorkspace:React.FC<props> = ({workspace}) => {
-    return (<Popover>
-        <PopoverTrigger>
-          <button className='btn-primary'>
-            <Icon as={FaPlus} fontSize='17px'/>
-          </button>
-        </PopoverTrigger>
-        <PopoverContent bg='Primary.100' color='veryLightGray.100' border='none'>
-          <PopoverCloseButton />
-          <PopoverHeader border={'none'}>Invite to {workspace?.name!}</PopoverHeader>
-          <PopoverBody>
-            <InviteUser workspace={workspace}/>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>)
-}
 
-interface InvitesProps {
-
-}
 

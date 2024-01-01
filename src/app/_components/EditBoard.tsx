@@ -51,7 +51,7 @@ const EditBoard:React.FC<props> = ({board}) => {
         <input className="input-regular" placeholder="New board title"value={name} onChange={(e) => setName (e.target.value)} />
         <p className="text-md font-semibold text-mediumGray">Columns</p>
         <div className="flex flex-col gap-2">
-            {columns && columns.map ((column, index) => {
+            {columns && columns.map ((column:Column, index:number) => {
                 return <button className='btn-del-col group'>
                     {column.name}
                     <RxCross2 className='text-mainRed group-hover:block hover:scale-105 hidden  text-[18px]' onClick={() => deleteColumn (column.id)} />

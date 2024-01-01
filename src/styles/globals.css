@@ -35,7 +35,10 @@
         @apply w-auto h-full px-4 rounded-md bg-lines text-mediumGray font-semibold border-none hover:text-mainPurple active:ring-1 active:ring-mainPurple flex justify-center items-center ;
     }
     .btn-link {
-        @apply w-full text-mediumGray  bg-transparent hover:text-mainPurple hover:bg-lines rounded-r-full px-4 py-2 flex justify-start items-center;
+        @apply w-full text-mediumGray  bg-transparent hover:text-mainPurple  rounded-r-full px-4 py-2 flex justify-start items-center;
+    }
+    .btn-setting {
+        @apply w-full text-mainPurple  bg-transparent hover:text-secondaryPurple  rounded-r-full px-4 py-2 flex justify-start items-center;
     }
     .btn-danger {
         @apply w-full text-mainRed bg-transparent hover:bg-secondaryRed/40 rounded-r-full px-4 py-2 flex justify-start items-center;
@@ -46,5 +49,20 @@
 
     .btn-red-primary {
         @apply w-full px-4 py-2 rounded-full border-none bg-mainRed hover:bg-secondaryRed text-white font-semibold ;
+    }
+
+    .outline-primary {
+        @apply px-4 py-2 rounded-full border-[1px] border-mainPurple hover:bg-mainPurple hover:text-white bg-transparent text-mainPurple ;
+    }
+    .outline-danger {
+        @apply px-4 py-2 rounded-full border-[1px] border-mainRed bg-transparent hover:text-white hover:bg-mainRed text-mainRed ;
+    }
+
+    .btn-field {
+        @apply p-2 rounded-r-full bg-secondaryPurple/20 text-mainPurple hover:bg-secondaryPurple/50 ;
+    }
+
+    .btn-field-active {
+        @apply p-2 rounded-r-full bg-mainPurple text-white ;
     }
 }

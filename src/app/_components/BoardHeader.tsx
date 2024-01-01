@@ -20,7 +20,7 @@ const BoardHeader: React.FC<props> = ({ board }) => {
         title="Add new task"
         cardModal={false}
         variant="btn-primary"
-        size="lg"
+        size="md"
         value={
           <div className="flex justify-center items-center gap-4">
             <p>Add Task</p>

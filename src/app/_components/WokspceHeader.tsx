@@ -7,12 +7,12 @@ import Link from "next/link";
 import { MdWorkspaces } from "react-icons/md";
 import { trpc } from "../_trpc/client";
 import ui from "../../styles/ui-module.module.css";
-import { InviteToWorkspace } from "./InviteUser";
 import { FaHome } from "react-icons/fa";
 import { TbBell } from "react-icons/tb";
 import Popover from "./ui/Popover";
-import BoardSettings from "./BoardSettings";
+import BoardSettings, { WorkspaceSettings } from "./BoardSettings";
 import { FaEllipsisV } from "react-icons/fa";
+import { InvitesList } from "./InvitesList";
 
 interface props {}
 const WorkspaceHeader: React.FC<props> = ({}) => {
@@ -35,7 +35,7 @@ const WorkspaceHeader: React.FC<props> = ({}) => {
           position="bottom"
           variant="btn-unsyled"
         >
-          <p>Workspace settings</p>
+          <InvitesList />
         </Popover>
         <Link href="/">
           <button className="btn-regular-primary">
@@ -50,8 +50,7 @@ const WorkspaceHeader: React.FC<props> = ({}) => {
           position="bottom"
           variant="btn-unsyled"
         >
-          <p>workspace settings</p>
-          {/* <BoardSettings /> */}
+          <WorkspaceSettings />
         </Popover>
       </div>
     </div>

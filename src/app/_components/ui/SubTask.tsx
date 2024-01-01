@@ -3,7 +3,7 @@ import { IoMdCheckboxOutline } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import { trpc } from "~/app/_trpc/client";
 import toast from "react-hot-toast";
-
+import { RxCross2 } from "react-icons/rx";
 interface props {
   subtask: SubTask;
 }
@@ -64,10 +64,8 @@ const Subtask: React.FC<props> = ({ subtask }) => {
         </p>
       </div>
 
-      <MdDelete
-        onClick={deleteSubtask}
-        className='text-mediumGray hover:scale-105'
-      />
+      <RxCross2 className='text-mainRed  hover:scale-105   text-[18px]' onClick={deleteSubtask} />
+
     </div>
   );
 };

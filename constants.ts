@@ -14,6 +14,9 @@ export const taskStatus:TaskStatus[] = [
 ];
 
 export const actions = [
+  {actionName:'Edit title', status:'regular'},
+  {actionName:'Add Description', status:'regular'},
+  {actionName:'Edit Description', status:'regular'},
   {actionName:'Add attachement', status:'regular'},
   {actionName:'Add Subtask', status:'regular'},
   {actionName:'Change Cover', status:'regular'},

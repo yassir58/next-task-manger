@@ -1,7 +1,6 @@
-import { HStack, Avatar, Stack , Text, Button} from "@chakra-ui/react"
 import { trpc } from "~/app/_trpc/client"
 import toast from "react-hot-toast"
-
+import Avatar from "./Avatar"
 interface props {
     attachment: Attachment
 }
@@ -23,26 +22,18 @@ const AttachmentCard:React.FC<props> = ({attachment}) => {
             id: attachment.id
         })
     }
-    return (<HStack spacing={4} minH={'60px'} bg='Primary.100' w='100%' borderRadius={'md'}>
-        <Avatar borderRadius={'md'} h='100%'  src={attachment.path} w='120px' />
-        <Stack spacing={4}>
-            <Text fontSize='18px' color='veryLightGray.100'>
+    return (<div className='flex gap-4 p-2 rounded-md bg-lines '>
+        <img src={attachment.path} className='w-[80px] h-auto object-cover rounded-md'/>
+        <div className="flex flex-col gap-3">
+            <p className='text-veryDarkGray'>
                 {attachment.name}
-            </Text>
-            <HStack spacing={3}>
-                <Button 
-                    onClick={deleteAttachment}
-                _hover={{
-                    color:'Primary.100',
-                    bg:'veryLightGray.100'
-                }} variant='outline' color='veryLightGray.100' borderColor={'veryLightGray.100'}>Delete</Button>
-                <Button _hover={{
-                    color:'Primary.100',
-                    bg:'veryLightGray.100'
-                }} variant='outline' color='veryLightGray.100' borderColor={'veryLightGray.100'}>Download</Button>
-            </HStack>
-        </Stack>
-    </HStack>)
+            </p>
+            <div className='flex gap-4'>
+                <button className="outline-danger" onClick={deleteAttachment}>Delete</button>
+                <button className="outline-primary" >Download</button>
+            </div>
+        </div>
+    </div>)
 
 }
 

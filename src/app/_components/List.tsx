@@ -25,7 +25,7 @@ export const List: React.FC<props> = ({ column }) => {
           tasks!.map((item: any, index: number) => {
             return (
               <Modal
-                size='full'
+                size='xl'
                 title=""
                 card={<Card task={item} key={index} />}
                 cardModal={true}

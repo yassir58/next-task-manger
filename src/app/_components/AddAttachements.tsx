@@ -14,6 +14,7 @@ interface props {
 const AddAttachements: React.FC<props> = ({ task }) => {
 
   const [value, setValue] = useState("");
+  const [uploaded, setUploaded] = useState<string | null> (null)
   const {onClose} = useContext (modalContext)
   const utils = trpc.useUtils ()
   const addAttachmentMutation = trpc.attachmentRouter.createAttachment.useMutation ({
@@ -35,19 +36,24 @@ const AddAttachements: React.FC<props> = ({ task }) => {
     } 
   }
   return (
-    <Stack w={'100%'} justifyContent={"center"} alignItems={"center"} spacing={10}>
-        <Input
-          w='100%'
+    <div className="flex flex-col gap-6">
+      <div>
+      <label htmlFor="title">Attachement title</label>
+        <input
+          id='title'
+          className='input-regular'
           value={value}
           placeholder="your attachment name"
-          variant={"regular"}
           onChange={(e) => setValue(e.target.value)}
         />
-        <UploadButton
+      </div>
+            
+       {uploaded ? <button className='btn-primary w-full' onClick={() => createAttachment (uploaded)}>create attachement</button> : <UploadButton
+        className="mt-4 ut-button:bg-mainPurple ut-button:w-full ut-button:ut-readying:bg-secondaryPurple"
           endpoint="attachmentUploader"
           onClientUploadComplete={(res) => {
             // Do something with the response
-            createAttachment (res[0]?.url!)
+            setUploaded (res[0]?.url!)
             console.log("Files: ", res);
           }}
           onUploadError={(error: Error) => {
@@ -55,9 +61,9 @@ const AddAttachements: React.FC<props> = ({ task }) => {
             console.log ('upload error: ', error)
           }}
 
-        />
+        />}
     
-    </Stack>
+    </div>
   );
 };
 export default AddAttachements;
