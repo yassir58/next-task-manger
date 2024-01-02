@@ -62,6 +62,7 @@ const Invite: React.FC<props> = ({ invite, received }) => {
     <div className='flex flex-col gap-2 rounded-md bg-lines/30 px-2 py-4'>
       <div className='flex justify-start gap-4'>
       <Avatar
+        size='w-6 h-6'
         image={`${
           user?.id! === owner?.id!
             ? reciever?.profileImage!

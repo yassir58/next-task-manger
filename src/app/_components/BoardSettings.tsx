@@ -9,6 +9,8 @@ import {InviteUser } from "./InviteUser"
 import { SetCover } from "./SetCover"
 import { FaImage } from "react-icons/fa6"
 import { Cover } from "./ui/Cover"
+import { signOut } from "next-auth/react"
+import UserProfile from "./UserProfile"
 
 interface props {
 
@@ -97,6 +99,36 @@ export const WorkspaceSettings:React.FC<props> = ({}) => {
       
        if (settingsMap.get (item)!.type === 'link')
            return <button className="btn-link" onClick={() => router.replace (settingsMap.get(item)!.href)} key={index}>{item}</button>
+       return <Modal size={settingsMap.get (item)!.size} title={item} cardModal={false} value={<p>{item}</p>} variant={settingsMap.get (item)!.variant}>
+           {settingsMap.get (item)!.component}
+       </Modal>
+   })}
+</div>)
+}
+
+
+export const HomeSettings:React.FC = ({}) => {
+
+    const settingsMap = new Map ()
+    const pathname = usePathname ()
+    const router= useRouter ()
+    const settingsArray = ["Profile settings", "Logout"]
+
+
+    const handleLogout = () => {
+        signOut({
+          redirect: true,
+          callbackUrl: `http://localhost:3000/login`,
+        });
+      };
+    settingsMap.set ("Logout", {type:'link', func:handleLogout, variant:'btn-danger'})
+    settingsMap.set ("Profile settings", {type:'modal', component:<UserProfile />, variant:'btn-link', size:'md'})
+
+   return (<div className='flex flex-col justify-start items-start gap-2'>
+   {settingsArray.map ((item, index) => {
+      
+       if (settingsMap.get (item)!.type === 'link')
+           return <button className={`${settingsMap.get(item)!.variant}`} onClick={() => settingsMap.get(item)!.func ()} key={index}>{item}</button>
        return <Modal size={settingsMap.get (item)!.size} title={item} cardModal={false} value={<p>{item}</p>} variant={settingsMap.get (item)!.variant}>
            {settingsMap.get (item)!.component}
        </Modal>

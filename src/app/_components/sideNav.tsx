@@ -63,12 +63,7 @@ export const NewBoard: React.FC<props> = ({}) => {
     }
   };
 
-  const handleLogout = () => {
-    signOut({
-      redirect: true,
-      callbackUrl: `http://localhost:3000/login`,
-    });
-  };
+  
 
   const handleEnter = (e: any) => {
     if (e.key === "Enter") newBoard();

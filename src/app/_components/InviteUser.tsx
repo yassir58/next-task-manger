@@ -16,7 +16,7 @@ interface InviteFieldProps {
 export const InviteFeild:React.FC<InviteFieldProps> = ({user, handleClick, selected}) => {
     return (<button className={`${user.id === selected?.id ? 'btn-field-active' :'btn-field'}`} onClick={() => handleClick (user)}>
        <div className='flex gap-5 w-full h-full justify-start items-center'>
-       <Avatar image={user.profileImage!} name={user.name!}  />
+       <Avatar size='w-[45px] h-[45px]' image={user.profileImage!} name={user.name!}  />
         <p className='font-semibold'>{user.name}</p>
        </div>
     </button>)

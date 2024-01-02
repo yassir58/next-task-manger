@@ -14,7 +14,11 @@ import LightLogo from "./ui/icons/lightLogo";
 import DarkLogo from "./ui/icons/darkLogo";
 import { trpc } from "../_trpc/client";
 import Avatar from "./ui/Avatar";
-
+import { TbBell } from "react-icons/tb";
+import Popover from "./ui/Popover";
+import { FaEllipsisV } from "react-icons/fa";
+import { InvitesList } from "./InvitesList";
+import { HomeSettings } from "./BoardSettings";
 interface props {}
 
 interface WorkspaceProps {}
@@ -31,7 +35,31 @@ const Header: React.FC<props> = ({}) => {
       {/* <LightLogo /> */}
       <DarkLogo />
 
-      <Avatar image={user?.profileImage!} name={user?.name!} />
+<div className='flex gap-8 justify-center items-center  h-full'>
+      <Modal
+          title="Invites"
+          cardModal={false}
+          size='md'
+          value={
+            <TbBell className="text-lg mt-2 text-mediumGray hover:text-mainPurple" />
+          }
+          variant="btn-unsyled mb-2"
+        >
+          <InvitesList />
+        </Modal>
+      <Avatar size='w-12 h-12' image={user?.profileImage!} name={user?.name!} />
+        
+        <Popover
+          title="Workspace settings"
+          value={
+            <FaEllipsisV className="text-mediumGray hover:text-mainPurple" />
+          }
+          position="bottom"
+          variant="btn-unsyled"
+        >
+          <HomeSettings />
+        </Popover>
+</div>
     </div>
   );
 };

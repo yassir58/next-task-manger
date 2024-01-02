@@ -46,7 +46,7 @@ const Subtask: React.FC<props> = ({ subtask }) => {
     }
   };
   return (
-    <div className="flex w-full justify-between items-center">
+    <div className="flex w-full justify-between items-center btn-del-col group">
       <div className='flex gap-4 justify-center items-center'>
         {subtask.done === false? (
           <MdCheckBoxOutlineBlank
@@ -64,7 +64,7 @@ const Subtask: React.FC<props> = ({ subtask }) => {
         </p>
       </div>
 
-      <RxCross2 className='text-mainRed  hover:scale-105   text-[18px]' onClick={deleteSubtask} />
+      <RxCross2 className='text-mainRed hidden  hover:scale-105 group-hover:block  text-[18px]' onClick={deleteSubtask} />
 
     </div>
   );
