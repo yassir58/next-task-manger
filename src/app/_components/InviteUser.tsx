@@ -29,7 +29,7 @@ export const InviteUser:React.FC<props> = ({workspace}) => {
     const utils  = trpc.useUtils ()
     const {data:users} = trpc.userRouter.getAllUsers.useQuery ();
     const [search , setSearch] = useState ('')
-    const [members , setMembers] = useState<User[]> ([])
+    const [members , setMembers] = useState ([])
     const inviteMutation = trpc.invitationsRouter.sendInvite.useMutation ({
       onSuccess: () => {
           toast.success ('Invite sent successfully')
@@ -54,7 +54,7 @@ export const InviteUser:React.FC<props> = ({workspace}) => {
     }
 
     const filterMembers = () => {
-      const filterdMembers = users ? users?.filter ((user) => user.name.includes (search)) : [] ;
+      const filterdMembers:any = users ? users?.filter ((user) => user.name.includes (search)) : [] ;
       setMembers (filterdMembers!);
     }
     return (<div className='flex flex-col gap-8'> 

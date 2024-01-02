@@ -65,4 +65,11 @@
     .btn-field-active {
         @apply p-2 rounded-r-full bg-mainPurple text-white ;
     }
+
+    .btn-accept {
+        @apply p-1 rounded-sm bg-secondaryPurple text-mainPurple font-semibold text-sm hover:opacity-80 ;
+    }
+    .btn-decline {
+        @apply p-1 rounded-sm bg-secondaryRed text-mainRed font-semibold text-sm hover:opacity-80 ; 
+    }
 }

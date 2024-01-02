@@ -1,28 +1,29 @@
-import { Stack, Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react"
 import useAuth from "~/hooks/useAuth"
 import { trpc } from "../_trpc/client"
 import { LoaderIcon } from "react-hot-toast"
 import Invite from "./Invite"
-
+import { useState } from "react"
 
 interface props {
-    invites:Invite[]
+    invites:Invite[],
+    received:boolean
 }
 
 
 
-const Invites:React.FC<props> = ({invites}) => {
+const Invites:React.FC<props> = ({invites, received}) => {
    
-    return <Stack spacing={3}>
+    return <div className='flex flex-col gap-4'>
         {invites && invites.map ((invite:Invite, index:number) => {
-            return <Invite invite={invite} key={index} />
+            return <Invite received={received} invite={invite} key={index} />
         })}
-    </Stack>
+    </div>
 }
 
 export const InvitesList:React.FC = ({}) => {
 
     const {user} = useAuth ()
+    const [tab, setTab] = useState (1)
 
     const {data:sent} = trpc.invitationsRouter.getSent.useQuery ({
         id: user?.id!
@@ -34,18 +35,20 @@ export const InvitesList:React.FC = ({}) => {
     
     console.table (sent)
     console.table (recieved)
-    return (<Tabs isFitted variant='soft-rounded'>
-    <TabList mb='1em'>
-      <Tab>Sent Invites</Tab>
-      <Tab>Recieved Invites</Tab>
-    </TabList>
-    <TabPanels>
-      <TabPanel>
-        <Invites invites={sent!}/>
-      </TabPanel>
-      <TabPanel>
-        <Invites invites={recieved!}/>
-      </TabPanel>
-    </TabPanels>
-  </Tabs>)
+    return (
+    <div className='flex w-full h-full gap-7 flex-col'>
+      <div className='flex w-full'>
+      <button className={`${tab === 1 ? 'btn-field-active' : 'btn-field' } w-full rounded-full`} onClick={() => setTab (1)}>Sent Invites</button>
+      <button className={`${tab === 2 ? 'btn-field-active' : 'btn-field' } w-full rounded-full`} onClick={() => setTab (2)}>Recieved Invites</button>
+    </div>
+    <div className='px-2 py-4 w-full flex gap-2 flex-col'>
+      <div className={`${tab === 1 ? 'block' : 'hidden' }`}>
+        <Invites received={false} invites={sent!}/>
+      </div>
+      <div className={`${tab === 2 ? 'block' : 'hidden' }`}>
+        <Invites received={true} invites={recieved!}/>
+      </div>
+    </div>
+    </div>
+  )
 }

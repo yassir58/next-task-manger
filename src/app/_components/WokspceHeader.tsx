@@ -13,6 +13,7 @@ import Popover from "./ui/Popover";
 import BoardSettings, { WorkspaceSettings } from "./BoardSettings";
 import { FaEllipsisV } from "react-icons/fa";
 import { InvitesList } from "./InvitesList";
+import Modal from "./ui/Modal";
 
 interface props {}
 const WorkspaceHeader: React.FC<props> = ({}) => {
@@ -27,16 +28,17 @@ const WorkspaceHeader: React.FC<props> = ({}) => {
       <h2 className="text-lg font-semibold text-darkGray">{workspace?.name}</h2>
 
       <div className="flex items-center justify-center gap-6">
-        <Popover
+        <Modal
           title="Invites"
+          cardModal={false}
+          size='md'
           value={
             <TbBell className="text-lg mt-2 text-mediumGray hover:text-mainPurple" />
           }
-          position="bottom"
           variant="btn-unsyled"
         >
           <InvitesList />
-        </Popover>
+        </Modal>
         <Link href="/">
           <button className="btn-regular-primary">
             <FaHome className="text-md" />

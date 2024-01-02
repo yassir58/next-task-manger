@@ -1,12 +1,13 @@
-import { HStack, Stack, Avatar, Text, Button } from "@chakra-ui/react";
 import { trpc } from "../_trpc/client";
 import useAuth from "~/hooks/useAuth";
 import toast from "react-hot-toast";
+import Avatar from "./ui/Avatar";
 
 interface props {
   invite: Invite;
+  received:boolean
 }
-const Invite: React.FC<props> = ({ invite }) => {
+const Invite: React.FC<props> = ({ invite, received }) => {
   const { data: owner } = trpc.userRouter.getUserById.useQuery({
     userId: invite?.ownerId!,
   });
@@ -58,34 +59,32 @@ const Invite: React.FC<props> = ({ invite }) => {
   }
 
   return (
-    <Stack alignItems='center' w='100%' bg='Primary.100' borderRadius={'md'} justifyContent={'center'} px='4' py='2'>
-      <HStack spacing={4}>
+    <div className='flex flex-col gap-2 rounded-md bg-lines/30 px-2 py-4'>
+      <div className='flex justify-start gap-4'>
       <Avatar
-        borderRadius='md'
-        src={`${
+        image={`${
           user?.id! === owner?.id!
             ? reciever?.profileImage!
             : owner?.profileImage!
         }`}
         name={"user"}
-        size="md"
       />
-        <Text color="veryLightGray.100" fontSize="20px">
+        <p className='text-sm text-veryDarkGray'>
         {user?.id! === owner?.id!
               ? `You sent an invitation to join ${workspace?.name!}`
               : `${owner?.name} Sent you an invitation to join ${workspace?.name!}`}
-        </Text>
-    </HStack>
-        <HStack w='100%' justifyContent={"space-between"}>
-          <Text fontSize={'sm'} color="gray.500">
+        </p>
+    </div>
+        <div className="w-full flex justify-between items-center">
+          <p className="text-xs text-mediumGray">
            to days ago
-          </Text>
-          <HStack spacing={3}>
-            <Button variant="accept" onClick={acceptInvite}>accept</Button>
-            <Button variant="decline" onClick={declineInvite}>decline</Button>
-          </HStack>
-        </HStack>
-      </Stack>
+          </p>
+          {received ? <div className='flex gap-4'>
+            <button className="btn-accept" onClick={acceptInvite}>accept</button>
+            <button className="btn-decline" onClick={declineInvite}>decline</button>
+          </div> : ''}
+        </div>
+      </div>
   );
 };
 
