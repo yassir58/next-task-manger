@@ -16,7 +16,7 @@ const page: React.FC<props> = ({}) => {
   }, [status]);
 
   return (
-    <div className="flex h-[100%] w-[100%] items-center justify-center">
+    <div className={`flex h-[100%] w-[100%] items-center justify-center `}>
       <p className="text-[#C4C1BB]"> there is no boards selected </p>
     </div>
   );

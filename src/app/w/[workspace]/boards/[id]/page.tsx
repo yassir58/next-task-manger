@@ -20,7 +20,7 @@ const page: React.FC<props> = ({}) => {
   });
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className={`flex flex-col h-full w-full `}>
       <BoardHeader board={board} />
     {columns && columns.length ? <div className='h-full relative z-10 w-full flex justify-start gap-2 items-start px-6 py-4 max-w-[75vw] overflow-x-auto'>
       {columns.map ((item, index) => {

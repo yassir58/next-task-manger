@@ -87,7 +87,7 @@ export const SideNav: React.FC<props> = ({}) => {
   });
 
   return (
-    <div className={`bg-white hidden  fixed left-0 top-0 ${visible ? 'md:flex' : ''} h-[100vh] w-[320px] flex-col gap-12 border-r-[1px] border-r-lines py-3`}>
+    <div className={`bg-white hidden  ${visible ? 'md:flex' : ''} h-[100vh] w-[320px] flex-col gap-12 border-r-[1px] border-r-lines py-3`}>
       <div className="px-12 py-3">
         <DarkLogo />
       </div>

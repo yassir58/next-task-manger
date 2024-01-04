@@ -9,7 +9,7 @@ const page: React.FC<props> = ({}) => {
   // const workspaceId = pathname.split ('/')[2]
 
   return (
-    <div className=" flex h-[100vh] w-full flex-col items-center">
+    <div className={` flex h-[100vh] w-full flex-col items-center `} >
       <WorkspaceHeader />
       <div className='w-full h-full flex justify-center items-center'>
       <p className='text-mediumGray text-md font-semibold'>This workspace is empty</p>
