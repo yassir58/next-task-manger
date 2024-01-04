@@ -70,3 +70,8 @@ type Invite  = {
     receiverId  : string
     workspaceId : string
 }
+
+type sideNavContext = {
+    visible?: boolean
+    setVisible?: (value:boolean) => void
+}

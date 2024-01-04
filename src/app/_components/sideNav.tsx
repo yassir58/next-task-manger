@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useState } from "react";
 import { trpc } from "../_trpc/client";
-import { authContext } from "../context/contexts";
+import { authContext, sideNavContext } from "../context/contexts";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { NavBarLinks } from "./NavBarLinks";
@@ -10,15 +10,7 @@ import Input from "./ui/Input";
 import PrimaryButton, { DangerButton } from "./ui/Buttons";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
-import {
-  Skeleton,
-  Avatar,
-  HStack,
-  Button,
-  Text,
-  Stack,
-  Icon,
-} from "@chakra-ui/react";
+import { BiHide } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
 import { usePathname } from "next/navigation";
 import Modal from "./ui/Modal";
@@ -88,12 +80,14 @@ export const SideNav: React.FC<props> = ({}) => {
   const pathname = usePathname();
   const router = useRouter ()
   const workspaceId = pathname.split("/")[2];
+  const boardId = pathname.split ("/")[4]
+  const {visible, setVisible} = useContext (sideNavContext)
   const { data: boards } = trpc.boardRouter.getBoards.useQuery({
     workspaceId: workspaceId!,
   });
 
   return (
-    <div className="bg-white  fixed left-0 top-0 flex h-[100vh] w-[320px] flex-col gap-12 border-r-[1px] border-r-lines py-3">
+    <div className={`bg-white hidden  fixed left-0 top-0 ${visible ? 'md:flex' : ''} h-[100vh] w-[320px] flex-col gap-12 border-r-[1px] border-r-lines py-3`}>
       <div className="px-12 py-3">
         <DarkLogo />
       </div>
@@ -102,8 +96,8 @@ export const SideNav: React.FC<props> = ({}) => {
         <div className="flex flex-col items-start justify-center gap-4 max-h-[50vh] overflow-y-auto pt-12">
           {boards && boards!.map((item, index) => {
             return (
-                <button className="btn-nav" onClick={() => router.replace (`/w/${workspaceId}/boards/${item.id}`)} key={index}>
-                <BoardIcon/>
+                <button className={`${item.id === boardId! ? 'btn-nav-active' : 'btn-nav'}`} onClick={() => router.replace (`/w/${workspaceId}/boards/${item.id}`)} key={index}>
+                <BoardIcon active={item.id === boardId!}/>
                 <p>{item.name}</p>  
                 </button>
             );
@@ -124,6 +118,13 @@ export const SideNav: React.FC<props> = ({}) => {
           <NewBoard />
         </Popover>
       </div>
+
+      <button className='btn-ghost-primary' onClick={() => setVisible (false)}>
+      <div className="flex w-full items-center justify-between">
+              <p>Hide sidenav</p>
+              <BiHide />
+            </div>
+      </button>
     </div>
   );
 };

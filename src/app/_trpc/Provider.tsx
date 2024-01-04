@@ -7,6 +7,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "~/styles/theme";
 import { AuthProvider } from "../providers/authProvider";
 import { SessionProvider } from "next-auth/react";
+import SideNavProvider from "../providers/SideNavProvider";
 export default function Provider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({}));
   const [trpcClient] = useState(() =>
@@ -25,7 +26,11 @@ export default function Provider({ children }: { children: React.ReactNode }) {
         <QueryClientProvider client={queryClient}>
           {" "}
           <AuthProvider>
-            <SessionProvider>{children}</SessionProvider>
+            <SessionProvider>
+                <SideNavProvider>
+                  {children}
+                </SideNavProvider>
+              </SessionProvider>
           </AuthProvider>{" "}
         </QueryClientProvider>
       </ChakraProvider>

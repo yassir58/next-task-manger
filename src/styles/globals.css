@@ -25,7 +25,10 @@
     }
 
     .btn-nav {
-        @apply w-[90%] pl-12 py-3 border-none focus:bg-mainPurple focus:text-white text-mediumGray hover:bg-lines hover:text-mainPurple bg-transparent rounded-r-full flex font-semibold justify-start items-center gap-2 ;
+        @apply w-[90%] pl-12 py-3 border-none focus:bg-mainPurple focus:text-white text-mediumGray hover:bg-lines hover:text-mainPurple bg-transparent rounded-r-full flex font-semibold justify-start items-center gap-4 ;
+    }
+    .btn-nav-active {
+        @apply w-[90%] pl-12 py-3 border-none bg-mainPurple text-white  hover:opacity-75 rounded-r-full flex font-semibold justify-start items-center gap-4 ;
     }
 
     .btn-unstyled {
