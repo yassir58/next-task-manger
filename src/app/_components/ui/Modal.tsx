@@ -61,15 +61,15 @@ const Modal: React.FC<modalWrapperProps> = ({
         } fixed left-0 top-0 z-30 flex h-[100vh] w-[100vw] items-center justify-center`}
       >
         <div
-          className="left-0 top-0 h-[100vh] w-[100vw]  bg-black/75 "
+          className="left-0 top-0 h-[100vh] w-[100vw] z-30  bg-black/75 "
           onClick={onClose}
         ></div>
-        <div className="fixed flex h-full w-full items-center justify-center">
+        <div className="fixed z-50 flex h-full w-full items-center justify-center">
           <div
-            className={` fixed z-50 ${sizesMap.get (size).w}  max-h-[70vh] overflow-y-auto rounded-md bg-white px-6 py-3 `}
+            className={` fixed z-50 ${sizesMap.get (size).w}  max-h-[70vh] overflow-y-auto rounded-md dark:bg-darkGray bg-white px-6 py-3`}
           >
             <div className="flex w-full items-center justify-between py-4">
-              <p className="text-md font-semibold text-black">{title}</p>
+              <p className="text-md font-semibold text-darkGray dark:text-white ">{title}</p>
               <RxCross1
                 className="text-mediumGray hover:scale-105"
                 onClick={onClose}

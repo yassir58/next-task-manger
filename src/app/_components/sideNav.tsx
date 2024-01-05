@@ -13,13 +13,15 @@ import { signOut } from "next-auth/react";
 import { BiHide } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
 import { usePathname } from "next/navigation";
-import Modal from "./ui/Modal";
+import Modal, { modalContext } from "./ui/Modal";
 
 import { z } from "zod";
 import DarkLogo from "./ui/icons/darkLogo";
 import BoardIcon from "./ui/icons/BoardIcon";
 import Popover from "./ui/Popover";
-
+import DarkModeSwitcher from "./DarkModeSwitcher";
+import LightLogo from "./ui/icons/lightLogo";
+import Logo from "./ui/icons/Logo";
 interface props {}
 
 export const NewBoard: React.FC<props> = ({}) => {
@@ -29,6 +31,7 @@ export const NewBoard: React.FC<props> = ({}) => {
   const schema = z.string().min(5);
   const pathname = usePathname();
   const workspaceId = pathname.split("/")[2];
+  const {onClose} = useContext (modalContext)
   const { isLoading, data: workspace } =
     trpc.workspaceRouter.getWorkspaceById.useQuery({
       id: workspaceId!,
@@ -40,6 +43,8 @@ export const NewBoard: React.FC<props> = ({}) => {
     onSuccess: (data: any) => {
       utils.boardRouter.invalidate();
       toast.success("success: board created succesfully");
+      setName ('')
+      onClose && onClose ()
     },
   });
   const newBoard = () => {
@@ -87,13 +92,13 @@ export const SideNav: React.FC<props> = ({}) => {
   });
 
   return (
-    <div className={`bg-white hidden  ${visible ? 'md:flex' : ''} h-[100vh] w-[320px] flex-col gap-12 border-r-[1px] border-r-lines py-3`}>
+    <div className={`dark:bg-darkGray bg-white hidden  ${visible ? 'md:flex' : ''} h-[100vh] w-[320px] flex-col gap-4 dark:border-r-[#3E3F4E] border-r-[1px] border-r-lines py-3`}>
       <div className="px-12 py-3">
-        <DarkLogo />
+    <Logo />
       </div>
-      <div className="flex flex-col gap-2">
         <h2 className="text-md px-12 py-4 text-mediumGray">ALL BOARDS ({boards ? boards!.length : 0})</h2>
-        <div className="flex flex-col items-start justify-center gap-4 max-h-[50vh] overflow-y-auto pt-12">
+      <div className="flex flex-col gap-2 flex-1">
+        <div className="flex flex-col items-start justify-start gap-4 max-h-[40vh] overflow-y-auto">
           {boards && boards!.map((item, index) => {
             return (
                 <button className={`${item.id === boardId! ? 'btn-nav-active' : 'btn-nav'}`} onClick={() => router.replace (`/w/${workspaceId}/boards/${item.id}`)} key={index}>
@@ -119,12 +124,15 @@ export const SideNav: React.FC<props> = ({}) => {
         </Popover>
       </div>
 
-      <button className='btn-ghost-primary' onClick={() => setVisible (false)}>
+      <div className='flex flex-col gap-2'>
+      <button className='btn-ghost-primary' onClick={() => setVisible && setVisible (false)}>
       <div className="flex w-full items-center justify-between">
               <p>Hide sidenav</p>
               <BiHide />
             </div>
       </button>
+      <DarkModeSwitcher />
+      </div>
     </div>
   );
 };

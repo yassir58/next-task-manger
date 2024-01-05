@@ -188,7 +188,7 @@ export const EditTask: React.FC<props> = ({ task }) => {
                 </div>
               </div>
             ) : (
-              <h2 className="text-xl font-semibold text-veryDarkGray">
+              <h2 className="text-xl font-semibold text-veryDarkGray dark:text-white">
                 {task.content}
               </h2>
             )}

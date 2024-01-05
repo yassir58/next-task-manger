@@ -31,6 +31,9 @@ export const AddTask: React.FC<props> = ({ boardId }) => {
     onSuccess: (data: any) => {
       toast.success("Task created successfully");
       utils.taskRouter.invalidate();
+      setInput ('')
+      setDescription ('')
+      setCover ('')
     },
     onError: (err: any) => toast.error("Error: failed to create task"),
   });
@@ -103,7 +106,7 @@ export const AddTask: React.FC<props> = ({ boardId }) => {
         <SetCover coverSetter={setCover} />
       </Modal>
       <select
-        className="rounded-sm border-2 border-mediumGray/25 bg-transparent px-4 py-2 font-semibold text-darkGray  active:ring-2 active:ring-mainPurple"
+        className="rounded-sm border-2 border-mediumGray/25 bg-transparent px-4 py-2 font-semibold text-darkGray dark:text-white  active:ring-2 active:ring-mainPurple"
         onChange={(e) => setStatus(e.target.value)}
       >
         {columns &&
@@ -123,8 +126,6 @@ export const AddTask: React.FC<props> = ({ boardId }) => {
         className='btn-primary'
         onClick={() => {
           addTask();
-          setInput ('')
-          setDescription ('')
           onClose!();
         }}
       >

@@ -7,10 +7,13 @@ import { FaPlus } from "react-icons/fa6";
 import NewColumn from "~/app/_components/NewColumn";
 import Modal from "~/app/_components/ui/Modal";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import { sideNavContext } from "~/app/context/contexts";
 interface props {}
 
 const page: React.FC<props> = ({}) => {
   const pathname = usePathname();
+  const {visible} = useContext (sideNavContext)
   const boardId = pathname.split("/")[4];
   const { data: board } = trpc.boardRouter.getBoardById.useQuery({
     id: boardId!,
@@ -22,7 +25,7 @@ const page: React.FC<props> = ({}) => {
   return (
     <div className={`flex flex-col h-full w-full `}>
       <BoardHeader board={board} />
-    {columns && columns.length ? <div className='h-full relative z-10 w-full flex justify-start gap-2 items-start px-6 py-4 max-w-[75vw] overflow-x-auto'>
+    {columns && columns.length ? <div className={`h-full dark:bg-veryDarkGray relative z-10 w-full flex justify-start gap-2 items-start px-6 py-4 ${visible ?'max-w-[83vw]' : 'max-w-[100vw]'} overflow-x-auto`}>
       {columns.map ((item, index) => {
         return <List column={item} key={index} />
       })}
@@ -33,7 +36,7 @@ const page: React.FC<props> = ({}) => {
       <NewColumn boardId={board?.id!} />
       </Modal>
     </div> : (
-        <div className="flex h-[100%]  items-center justify-center ">
+        <div className="flex h-[100%]  items-center justify-center dark:bg-veryDarkGray">
         <div className="flex flex-col gap-4 justify-center items-center">
           <p className="font-semibold text-mediumGray">
             This board is empty, create a column to get started.

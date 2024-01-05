@@ -20,7 +20,9 @@ const AddAttachements: React.FC<props> = ({ task }) => {
   const addAttachmentMutation = trpc.attachmentRouter.createAttachment.useMutation ({
     onSuccess: () => {
       utils.attachmentRouter.invalidate ()
-      toast.success ('Attachment created successfully')},
+      toast.success ('Attachment created successfully')
+      setValue ('')
+      },
     onError: () => toast.error ('Failed to create attachment')
   })
   const createAttachment = (path:string) =>{
@@ -38,7 +40,7 @@ const AddAttachements: React.FC<props> = ({ task }) => {
   return (
     <div className="flex flex-col gap-6">
       <div>
-      <label htmlFor="title">Attachement title</label>
+      <label htmlFor="title" className="text-veryDarkGray dark:text-white">Attachement title</label>
         <input
           id='title'
           className='input-regular'

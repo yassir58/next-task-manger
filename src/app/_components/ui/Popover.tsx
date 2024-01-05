@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-
+import { modalContext } from "./Modal";
 interface props {
   variant: string;
   value: any;
@@ -26,6 +26,7 @@ const Popover: React.FC<props> = ({
   const onClose = () => setVisible(false);
   const onOpen = () => setVisible(true);
 
+
   return (
     <div>
       <div
@@ -41,18 +42,21 @@ const Popover: React.FC<props> = ({
         <div
           className={`popover ${
             visible ? "flex" : "hidden"
-          } absolute z-50 flex-col gap-4 rounded-md bg-white px-4 pb-4 pt-2 shadow-lg ${positionMap.get(
+          } absolute z-50 flex-col gap-4 rounded-md dark:bg-veryDarkGray bg-white px-4 pb-4 pt-2 shadow-lg ${positionMap.get(
             position,
           )}  max-h-[500px] min-w-[300px] overflow-y-auto`}
         >
          {header ? <div className="flex w-full items-center justify-between py-4">
-            <p className="text-md font-semibold text-black">{title}</p>
+            <p className="text-md font-semibold text-darkGray dark:text-white">{title}</p>
             <RxCross1
               className="text-mediumGray hover:scale-105"
               onClick={onClose}
             />
           </div> : ''}
-          {children}
+          
+         <modalContext.Provider value={{onClose}}>
+         {children}
+         </modalContext.Provider>
         </div>
       </div>
     </div>

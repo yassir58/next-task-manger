@@ -19,6 +19,7 @@ const AddComment:React.FC<props> = ({task}) => {
         onSuccess: () => {
             toast.success ('Comment created successfully')
             utils.commentRouter.invalidate ()
+            setValue ('')
         },
         onError: () => toast.error ('Failed to create comment')
     })
@@ -37,7 +38,7 @@ const AddComment:React.FC<props> = ({task}) => {
     }
     return (
            <div className='relative w-full h-full rounded-md shadow-md'>
-           <textarea className='placeholder:text-mediumGray  placeholder:italic  px-4 pt-2 pb-6 border-nne w-full h-full' cols={30} placeholder="your comment on this task" rows={3}  onChange={(e) => setValue (e.target.value)}/>
+           <textarea className='placeholder:text-mediumGray dark:bg-mediumGray/5 dark:border-[1px] dark:border-[#3E3F4E] dark:text-white  placeholder:italic  px-4 pt-2 pb-6 border-nne w-full h-full' cols={30} placeholder="your comment on this task" rows={3}  onChange={(e) => setValue (e.target.value)}/>
             <button className='btn-regular-primary absolute bottom-2 right-2' onClick={createComment}>add comment</button>
             </div> )
 }

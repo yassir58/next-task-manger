@@ -3,7 +3,8 @@ import { trpc } from "../_trpc/client"
 import { FaCross } from "react-icons/fa6"
 import toast from "react-hot-toast"
 import { RxCross2 } from "react-icons/rx";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { modalContext } from "./ui/Modal";
 interface props {
     board: any
 }
@@ -15,6 +16,7 @@ const EditBoard:React.FC<props> = ({board}) => {
     const [name, setName] = useState ('')
     const utils = trpc.useUtils ()
     const boardId = pathname.split ('/')[4]
+    const {onClose} = useContext (modalContext)
   
     const {data:columns} = trpc.columnRouter.getAll.useQuery ({
         boardId:boardId!
@@ -23,6 +25,9 @@ const EditBoard:React.FC<props> = ({board}) => {
         onSuccess : () => {
             toast.success ('Board edited successfully')
             utils.boardRouter.invalidate ()
+            setName ('')
+            onClose && onClose ();
+
     }
     })
     const deleteColumnMutation = trpc.columnRouter.deleteColumn.useMutation ({
@@ -47,7 +52,7 @@ const EditBoard:React.FC<props> = ({board}) => {
         })
     }
     return (<div className='flex flex-col gap-5 min-w-[25vw]'>
-        <p className='text-lg font-semibold text-veryDarkGray'>{board?.name}</p>
+        <p className='text-lg font-semibold text-veryDarkGray dark:text-white'>{board?.name}</p>
         <input className="input-regular" placeholder="New board title"value={name} onChange={(e) => setName (e.target.value)} />
         <p className="text-md font-semibold text-mediumGray">Columns</p>
         <div className="flex flex-col gap-2">

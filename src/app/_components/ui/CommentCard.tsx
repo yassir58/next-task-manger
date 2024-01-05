@@ -43,11 +43,11 @@ const CommentCard:React.FC<props> = ({comment}) =>{
             id: comment.id
         })
     }
-    return (<div className='flex gap-4 px-2 py-4 w-full group'>
+    return (<div className='flex gap-4 px-2 py-4 w-full group '>
         <Avatar size='w-8 h-8' name={user?.name!} image={user?.profileImage!}/>
         <div className='flex justify-between items-center w-full'>
             <div className='flex flex-col gap-3'>
-            <p className='text-veryDarkGray'>{comment.content}</p>
+            <p className='text-veryDarkGray dark:text-white'>{comment.content}</p>
             <p className='font-semibold text-mediumGray text-xs'>{comment.createdAt}</p>
             </div>
 

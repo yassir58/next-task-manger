@@ -81,7 +81,12 @@ export const SetCover: React.FC<props> = ({ coverSetter, submitHandler , cancelH
             Change cover
           </button>
         ) : (
-          <button className="btn-primary" onClick={() => cancelHandler! (false)}>
+          <button className="btn-primary" onClick={() => {
+            if (cancelHandler)
+              cancelHandler! (false)
+            else if (onClose)
+              onClose ();
+          }}>
             done
           </button>
         )}

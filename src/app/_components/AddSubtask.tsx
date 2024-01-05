@@ -16,7 +16,9 @@ const AddSubtask:React.FC<props> = ({task}) =>{
     const addSubTaskMutation = trpc.subtaskRouter.createSubtask.useMutation ({
         onSuccess: () => {
             utils.subtaskRouter.invalidate ();
-            toast.success ('Subtask created successfully')},
+            toast.success ('Subtask created successfully')
+            setContent ('')
+        },
         onError: (error:any) => toast.error (`Error: ${error}`)
     })
 
@@ -34,7 +36,7 @@ const AddSubtask:React.FC<props> = ({task}) =>{
     }
     const {onClose} = useContext (modalContext);
     return (<Stack spacing={4}>
-        <label className='text-sm font-semibold text-veryDarkGray' htmlFor="subtask">Subtask content</label>
+        <label className='text-sm font-semibold text-veryDarkGray dark:text-white' htmlFor="subtask">Subtask content</label>
         <input className='input-regular' id='subtask' value={content}  placeholder='subtask content' onChange={(e) => setContent (e.target.value)}/>
         <button className={`btn-primary`} onClick={()=>{
         addSubTask ()

@@ -14,18 +14,27 @@ import BoardSettings, { WorkspaceSettings } from "./BoardSettings";
 import { FaEllipsisV } from "react-icons/fa";
 import { InvitesList } from "./InvitesList";
 import Modal from "./ui/Modal";
+import { useContext } from "react";
+import { sideNavContext } from "../context/contexts";
+import Logo from "./ui/icons/Logo";
 
 interface props {}
 const WorkspaceHeader: React.FC<props> = ({}) => {
   const pathname = usePathname();
+  const {visible} = useContext (sideNavContext)
   const workspaceId = pathname.split("/")[2];
   const { data: workspace } = trpc.workspaceRouter.getWorkspaceById.useQuery({
     id: workspaceId!,
   });
 
   return (
-    <div className="flex w-[100%] items-center justify-between border-b-[1px] border-b-lines bg-white px-12 py-4">
-      <h2 className="text-lg font-semibold text-darkGray">{workspace?.name}</h2>
+    <div className="flex dark:bg-darkGray dark:text-white dark:border-b-[#3E3F4E] w-[100%] items-center justify-between border-b-[1px] border-b-lines bg-white px-12 py-4">
+       <div className='flex gap-2 h-full  justify-start items-center w-full'>
+     {visible ? '' : ( <div className="border-r-[1px] border-r-lines dark:border-r-[#3E3F4E] h-full px-4">
+        <Logo/>
+      </div>)}
+     <h2 className="text-lg font-semibold text-darkGray dark:text-white">{workspace?.name}</h2>
+     </div>
 
       <div className="flex items-center justify-center gap-6">
         <Modal

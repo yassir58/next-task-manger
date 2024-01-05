@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { requestSchema } from "../../../constants";
+import Logo from "../_components/ui/icons/Logo";
+import DarkModeSwitcher from "../_components/DarkModeSwitcher";
 
 const signUp: React.FC<props> = ({}) => {
   const [username, setUsername] = useState("");
@@ -33,50 +35,56 @@ const signUp: React.FC<props> = ({}) => {
     }
   };
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-
-      <div className='flex px-16 flex-col items-start justify-center gap-4 rounded-[12px] bg-[#1A1B1F] drop-shadow-md py-6'>
-      <p className="text-2xl text-left text-[#C4C1BB]">Sign up</p>
+    <main className="relative flex min-h-screen flex-col items-center justify-center bg-lines dark:bg-darkGray">
+      <div className='absolute top-2 right-2'>
+        <DarkModeSwitcher />
+      </div>
+      <div className='flex px-16 flex-col items-start justify-center gap-4 rounded-[12px] min-w-[40vw] bg-white dark:bg-veryDarkGray drop-shadow-md py-6'>
+      <div className='flex justify-center items-center w-full'>
+      <Logo />
+      </div>
+      <p className="text-2xl text-left text-veryDarkGray dark:text-white">Sign up</p>
       <form
+      className="w-full"
         onSubmit={(e) => {
           e.preventDefault();
           signUp();
         }}
       >
-        <div className="grid max-w-xl grid-rows-4 gap-3">
-          <div className="flex flex-col gap-3">
-            <label className="font-bold text-gray-100" htmlFor="username">
+        <div className="grid max-w-xl grid-rows-4 gap-3 w-full">
+          <div className="flex flex-col gap-3 w-full">
+            <label className="font-bold text-mediumGray " htmlFor="username">
               Username
             </label>
             <input
+              className="input-regular"
               onChange={(e) => setUsername(e.target.value)}
-              className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400  focus:outline-none"
               id="username"
               value={username}
               type="text"
               placeholder="type your username"
             />
           </div>
-          <div className="flex flex-col gap-3">
-            <label className="font-bold text-gray-100" htmlFor="email">
+          <div className="flex flex-col gap-3 w-full">
+            <label className="font-bold text-mediumGray" htmlFor="email">
               Email
             </label>
             <input
+              className="input-regular"
               onChange={(e) => setEmail(e.target.value)}
-              className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400  focus:outline-none"
               id="email"
               value={email}
               type="email"
               placeholder="type your email"
             />
           </div>
-          <div className="flex flex-col gap-3">
-            <label className="font-bold text-gray-100" htmlFor="password">
+          <div className="flex flex-col gap-3 w-full">
+            <label className="font-bold text-mediumGray" htmlFor="password">
               Password
             </label>
             <input
+              className="input-regular"
               onChange={(e) => setPassword(e.target.value)}
-              className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400  focus:outline-none"
               id="password"
               value={password}
               type="password"
@@ -86,12 +94,12 @@ const signUp: React.FC<props> = ({}) => {
         </div>
         <button
           type="submit"
-          className="rounded-[12px]  bg-blue-500 px-4 py-2 text-gray-50"
+          className="btn-primary w-full"
         >
           signup
         </button>
       </form>
-        <Link href={'/login'}><p className='text-white py-3'>already have an account ? log in</p></Link>
+        <Link href={'/login'}><p className='text-mainPurple  py-3'>already have an account ? log in</p></Link>
           </div>
     </main>
   );

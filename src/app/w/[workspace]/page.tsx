@@ -11,7 +11,7 @@ const page: React.FC<props> = ({}) => {
   return (
     <div className={` flex h-[100vh] w-full flex-col items-center `} >
       <WorkspaceHeader />
-      <div className='w-full h-full flex justify-center items-center'>
+      <div className='w-full h-full flex justify-center items-center dark:bg-veryDarkGray'>
       <p className='text-mediumGray text-md font-semibold'>This workspace is empty</p>
       </div>
     </div>

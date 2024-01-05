@@ -19,6 +19,8 @@ import Popover from "./ui/Popover";
 import { FaEllipsisV } from "react-icons/fa";
 import { InvitesList } from "./InvitesList";
 import { HomeSettings } from "./BoardSettings";
+import DarkModeSwitcher from "./DarkModeSwitcher";
+import Logo from "./ui/icons/Logo";
 interface props {}
 
 interface WorkspaceProps {}
@@ -30,12 +32,11 @@ const Header: React.FC<props> = ({}) => {
   console.log ('user : ', user)
   return (
     <div
-      className={`bg-white flex w-[100%] items-center justify-between border-b-[1px] border-b-lines px-16 py-2`}
+      className={`bg-white dark:bg-darkGray dark:border-b-[#3E3F4E] flex w-[100%] items-center justify-between border-b-[1px] border-b-lines px-16 py-2`}
     >
-      {/* <LightLogo /> */}
-      <DarkLogo />
-
+      <Logo />
 <div className='flex gap-8 justify-center items-center  h-full'>
+ <DarkModeSwitcher /> 
       <Modal
           title="Invites"
           cardModal={false}
@@ -66,7 +67,7 @@ const Header: React.FC<props> = ({}) => {
 
 export const WorkspaceHeader: React.FC<WorkspaceProps> = ({}) => {
   return <div className="w-full px-16 py-16 flex justify-between items-center">
-    <h2 className="text-black font-semibold text-2xl">Your Workspaces</h2>
+    <h2 className="text-verDarkGray font-semibold text-2xl dark:text-white">Your Workspaces</h2>
 
     <Modal value='create workspace' title="Create new workspace" variant="btn-primary" cardModal={false}>
       <NewWorkspace />

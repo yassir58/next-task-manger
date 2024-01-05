@@ -30,37 +30,37 @@ const LoginForm:React.FC<props> = ({})=>{
         }
     }
     return (
-        <form className="flex flex-col gap-6"  onSubmit={(e)=>{
+        <form className="flex flex-col gap-6 w-full"  onSubmit={(e)=>{
             e.preventDefault ()
             handleSignIn ()
         }}>
-            <div className="flex flex-col gap-3">
-          <label className="font-bold text-gray-100" htmlFor="email">
+            <div className="flex flex-col gap-3 w-full">
+          <label className='text-mediumGray'  htmlFor="email">
             Email
           </label>
           <input
+            className='input-regular'
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400  focus:outline-none"
             id="email"
             value={email}
             type="email"
             placeholder="type your email"
           />
         </div>
-        <div className="flex flex-col gap-3">
-          <label className="font-bold text-gray-100" htmlFor="password">
+        <div className="flex flex-col gap-3 w-full">
+          <label className='text-mediumGray' htmlFor="password">
             Password
           </label>
           <input
+            className='input-regular'
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-[12px] border-[1px] border-gray-400 hover:opacity-70 text-[#D6E4FC] bg-transparent px-3 py-1 outline-none placeholder:text-sm placeholder:italic placeholder:text-gray-400  focus:outline-none"
             id="password"
             value={password}
             type="password"
             placeholder="type your password"
           />
         </div>
-        <button type='submit' className='bg-blue-600 rounded-[12px] px-6 py-2'>sign in</button>
+        <button type='submit' className='btn-primary w-full'>sign in</button>
         </form>
     )
 }

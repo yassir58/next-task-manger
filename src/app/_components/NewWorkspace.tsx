@@ -53,7 +53,7 @@ const NewWorkspace: React.FC<props> = ({}) => {
         <div className="flex flex-col gap-5">
           {cover.length ? <Cover image={cover} /> : ""}
           <div className="flex flex-col gap-3">
-            <h2 className="text-sm font-semibold text-veryDarkGray">
+            <h2 className="text-sm font-semibold text-veryDarkGray dark:text-white">
               Workspace name
             </h2>
             <input

@@ -6,14 +6,25 @@ import Modal from "./ui/Modal";
 import Popover from "./ui/Popover";
 import { FaEllipsisV } from "react-icons/fa";
 import BoardSettings from "./BoardSettings";
+import Logo from "./ui/icons/Logo";
+import { sideNavContext } from "../context/contexts";
+import { useContext } from "react";
+
 interface props {
   board: any;
 }
 
 const BoardHeader: React.FC<props> = ({ board }) => {
+
+  const {visible} = useContext (sideNavContext)
   return (
-    <div className="bg-white flex w-[100%] items-center justify-between border-b-[1px] border-b-lines px-12 py-4">
-      <h2 className="text-lg font-semibold text-darkGray">{board?.name}</h2>
+    <div className="dark:bg-darkGray dark:text-white bg-white flex w-[100%] items-center justify-between dark:border-b-[#3E3F4E] border-b-[1px] border-b-lines px-12 py-4">
+     <div className='flex gap-2'>
+     {visible ? '' : ( <div className="border-r-[1px] border-r-lines dark:border-r-[#3E3F4E]">
+        <Logo/>
+      </div>)}
+     <h2 className="text-lg font-semibold text-darkGray dark:text-white">{board?.name}</h2>
+     </div>
 
      <div className='flex gap-4 justify-center items-center'>
      <Modal

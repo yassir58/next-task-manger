@@ -22,10 +22,10 @@ const AttachmentCard:React.FC<props> = ({attachment}) => {
             id: attachment.id
         })
     }
-    return (<div className='flex gap-4 p-2 rounded-md bg-lines/30 '>
+    return (<div className='flex gap-4 p-2 rounded-md bg-lines/30 dark:bg-veryDarkGray'>
         <img src={attachment.path} className='w-[80px] h-auto object-cover rounded-md'/>
         <div className="flex flex-col gap-3">
-            <p className='text-veryDarkGray'>
+            <p className='text-veryDarkGray dark:text-mediumGray'>
                 {attachment.name}
             </p>
             <div className='flex gap-4'>

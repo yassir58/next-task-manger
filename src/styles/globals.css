@@ -17,7 +17,7 @@
         @apply py-2 px-3 bg-mainPurple/5 w-full text-secondaryPurple font-semibold rounded-sm  hover:bg-mainPurple/10 ;
     }
     .input-regular {
-        @apply w-full rounded-sm border-[1px] border-mediumGray/25 px-4 py-2 text-black outline-none placeholder:text-xs placeholder:text-mediumGray active:outline-none active:ring-2 active:ring-mainPurple ;
+        @apply w-full dark:bg-transparent dark:text-white rounded-sm border-[1px] border-mediumGray/25 px-4 py-2 text-black outline-none placeholder:text-xs placeholder:text-mediumGray active:outline-none active:ring-2 active:ring-mainPurple ;
     }
 
     .btn-ghost-primary {
@@ -35,7 +35,7 @@
         @apply bg-transparent border-none px-4 py-2 text-mediumGray hover:text-mainPurple hover:scale-105;
     }
     .btn-column {
-        @apply w-auto h-full px-4 rounded-md bg-lines text-mediumGray font-semibold border-none hover:text-mainPurple active:ring-1 active:ring-mainPurple flex justify-center items-center ;
+        @apply w-auto h-full px-4 rounded-md bg-lines text-mediumGray font-semibold border-none hover:text-mainPurple active:ring-1 active:ring-mainPurple flex justify-center items-center dark:bg-mediumGray/5 ;
     }
     .btn-link {
         @apply w-full text-mediumGray  bg-transparent hover:text-mainPurple  rounded-r-full px-4 py-2 flex justify-start items-center;
@@ -62,7 +62,7 @@
     }
 
     .btn-field {
-        @apply p-2 rounded-r-full bg-secondaryPurple/20 text-mainPurple hover:bg-secondaryPurple/50 ;
+        @apply p-2 rounded-r-full bg-secondaryPurple/20 dark:text-white text-mainPurple hover:bg-secondaryPurple/50 ;
     }
 
     .btn-field-active {
