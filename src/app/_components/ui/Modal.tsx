@@ -71,7 +71,7 @@ const Modal: React.FC<modalWrapperProps> = ({
             <div className="flex w-full items-center justify-between py-4">
               <p className="text-md font-semibold text-darkGray dark:text-white ">{title}</p>
               <RxCross1
-                className="text-mediumGray hover:scale-105"
+                className="text-mediumGray hover:scale-115 hover:bg-mainPurple"
                 onClick={onClose}
               />
             </div>
