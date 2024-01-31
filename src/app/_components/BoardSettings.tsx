@@ -118,7 +118,7 @@ export const HomeSettings:React.FC = ({}) => {
     const handleLogout = () => {
         signOut({
           redirect: true,
-          callbackUrl: `http://localhost:3000/login`,
+          callbackUrl: `https://kanban-task-manger.vercel.app/login`,
         });
       };
     settingsMap.set ("Logout", {type:'link', func:handleLogout, variant:'btn-danger'})
