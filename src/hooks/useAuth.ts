@@ -7,7 +7,7 @@ const useAuth = () => {
         userId: session?.user.id!
     })
 
-    return {user}
+    return {user, session}
 }
 
 export default useAuth

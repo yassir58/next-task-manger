@@ -1,8 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdTaskAlt } from "react-icons/md";
 import ui from "../../styles/ui-module.module.css";
-import { FaPlus } from "react-icons/fa6";
 import Modal from "./ui/Modal";
 import NewWorkspace from "./NewWorkspace";
 import { MdWorkspaces } from "react-icons/md";
@@ -20,17 +19,23 @@ import { FaEllipsisV } from "react-icons/fa";
 import { InvitesList } from "./InvitesList";
 import { HomeSettings } from "./BoardSettings";
 import DarkModeSwitcher from "./DarkModeSwitcher";
+import { useRouter } from "next/navigation";
 import Logo from "./ui/icons/Logo";
 interface props {}
 
 interface WorkspaceProps {}
 
 const Header: React.FC<props> = ({}) => {
-  const { user } = useAuth();
+  const { user, session } = useAuth();  
+  const router = useRouter ()
   
 
-  console.log ('user : ', user)
-  return (
+  
+  useEffect (()=> {
+    if (!session?.user)
+      router.push ('/login')
+  })
+    return (
     <div
       className={`bg-white dark:bg-darkGray dark:border-b-[#3E3F4E] flex w-[100%] items-center justify-between border-b-[1px] border-b-lines px-16 py-2`}
     >
